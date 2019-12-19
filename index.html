@@ -132,6 +132,80 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 500 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/12/19/about-streaming-core/">StreamingCore项目介绍</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="是时候驻足整装了"><a href="#是时候驻足整装了" class="headerlink" title="是时候驻足整装了"></a>是时候驻足整装了</h2><p>明年的业余时间会集中在这个StreamingCore项目上。进入直播行业也有六七年时间了，这将是我迄今的职业生涯中最重要的一份总结。</p>
+<p>如同其名，StreamingCore将是一套直播核心流程的解决方案，集成采集、编码、推流功能，同时支持Android和iOS两端。借鉴FFmpeg的设计思想，StreamingCore也会以模块化架构实现，允许独立使用某一功能模块。同一功能模块，或许会提供多套实现方案，以供比较选择。</p>
+<h2 id="暂拟定的功能模块"><a href="#暂拟定的功能模块" class="headerlink" title="暂拟定的功能模块"></a>暂拟定的功能模块</h2><h4 id="音频采集模块"><a href="#音频采集模块" class="headerlink" title="音频采集模块"></a>音频采集模块</h4><ul>
+<li>OpenSL ES implementation for Android</li>
+<li>AudioRecord implementation for Android</li>
+<li>Audio Unit implementation for iOS</li>
+</ul>
+<h4 id="图像采集模块"><a href="#图像采集模块" class="headerlink" title="图像采集模块"></a>图像采集模块</h4><ul>
+<li>Implementation based on Camera interface for Android</li>
+<li>Implementation based on Camera2 interface for Android</li>
+<li>Implementation based on Virtual Display for Android</li>
+<li>Implementation based on AVFoundation framework for iOS</li>
+<li>Implementation based on ReplayKit for iOS</li>
+</ul>
+<h4 id="音频编码模块"><a href="#音频编码模块" class="headerlink" title="音频编码模块"></a>音频编码模块</h4><ul>
+<li>Audio Encoder implementation based on MediaCodec for Android</li>
+<li>Audio Encoder implementation based on AudioToolBox for iOS</li>
+</ul>
+<h4 id="视频编码模块"><a href="#视频编码模块" class="headerlink" title="视频编码模块"></a>视频编码模块</h4><ul>
+<li>Video Encoder implementation based on MediaCodec for Android</li>
+<li>Video Encoder implementation based on VideoToolBox for iOS</li>
+</ul>
+<h4 id="推流模块"><a href="#推流模块" class="headerlink" title="推流模块"></a>推流模块</h4><ul>
+<li>Streaming by Rtmp Protocol</li>
+<li>Streaming by custom Protocol based on UDP</li>
+</ul>
+<p>各个模块将暴露标准化接口，供扩展实现。</p>
+<h2 id="我不喜欢Java和Objective-C"><a href="#我不喜欢Java和Objective-C" class="headerlink" title="我不喜欢Java和Objective-C"></a>我不喜欢Java和Objective-C</h2><p>或者反过来说，我喜欢Kotlin和Swift。够简洁，够现代化，这就足够了。公司业务已呈现尾大不掉、积重难返之态，更加之KPI当头，相关负责人没有勇气切换到新的开发环境。我已学的Kotlin，我想学的Swift，几无用武之地，这也是我萌生实施此项目的一个重要原因。</p>
+<p>同样基于这个技术决定，项目质量无从保证。成品后能否被接入方接受，就更难说了……</p>
+<h2 id="大概的开发计划"><a href="#大概的开发计划" class="headerlink" title="大概的开发计划"></a>大概的开发计划</h2><ul>
+<li>时间周期为一年（2020.1.1——2020.12.31）</li>
+<li>先Android端全功能，再iOS端</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-12-10T07:37:52.000Z">2019-12-10</time>
                 
                 
@@ -262,7 +336,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </a>
                 </div>
@@ -414,6 +488,25 @@
         
         <article class="media">
             
+            <a href="/2019/12/19/about-streaming-core/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="StreamingCore项目介绍">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time></div>
+                    <a href="/2019/12/19/about-streaming-core/" class="title has-link-black-ter is-size-6 has-text-weight-normal">StreamingCore项目介绍</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/12/10/xian-travel/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="西安行有感">
@@ -467,7 +560,7 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -527,6 +620,25 @@
         
         <article class="media">
             
+            <a href="/2019/12/19/about-streaming-core/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="StreamingCore项目介绍">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time></div>
+                    <a href="/2019/12/19/about-streaming-core/" class="title has-link-black-ter is-size-6 has-text-weight-normal">StreamingCore项目介绍</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/12/10/xian-travel/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="西安行有感">
@@ -580,7 +692,7 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
