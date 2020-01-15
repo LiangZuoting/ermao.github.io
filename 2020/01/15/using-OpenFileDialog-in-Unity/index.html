@@ -7,15 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Category: StreamingCore - 学海扁舟</title>
+<title>在 Unity 项目中使用 OpenFileDialog 实现选择文件功能 - 学海扁舟</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="学海扁舟">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;categories&#x2F;StreamingCore&#x2F;index.html">
+    <meta name="description" content="开发阶段用的是 UnityEditor.EditorUtility.OpenFilePanel() 函数，简单易用。但是如其名所示，UnityEditor 只在 Unity 编辑器内可见，尝试 build 出 Windows 下 standalone 包时会报编译错误。 解决办法是用 mono 库下的相应功能实现打开文件。  在 Unity 安装根目录的 \Editor\Data\Mono\lib">
+<meta name="keywords" content="Unity,mono">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Unity 项目中使用 OpenFileDialog 实现选择文件功能">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;using-OpenFileDialog-in-Unity&#x2F;index.html">
 <meta property="og:site_name" content="学海扁舟">
+<meta property="og:description" content="开发阶段用的是 UnityEditor.EditorUtility.OpenFilePanel() 函数，简单易用。但是如其名所示，UnityEditor 只在 Unity 编辑器内可见，尝试 build 出 Windows 下 standalone 包时会报编译错误。 解决办法是用 mono 库下的相应功能实现打开文件。  在 Unity 安装根目录的 \Editor\Data\Mono\lib">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;og_image.png">
+<meta property="og:updated_time" content="2020-01-15T05:17:11.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;og_image.png">
 
@@ -75,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.png" alt="学海扁舟" height="28">
+                <img src="/images/logo.png" alt="在 Unity 项目中使用 OpenFileDialog 实现选择文件功能" height="28">
             
             </a>
         </div>
@@ -124,36 +128,24 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">Categories</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">StreamingCore</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time>
+                <time class="level-item has-text-grey" datetime="2020-01-15T04:20:37.000Z">2020-01-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/StreamingCore/">StreamingCore</a>
+                <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 minutes read (About 500 words)
+                    2 minutes read (About 289 words)
                 </span>
                 
                 
@@ -162,44 +154,34 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/12/19/about-streaming-core/">StreamingCore项目介绍</a>
+                在 Unity 项目中使用 OpenFileDialog 实现选择文件功能
             
         </h1>
         <div class="content">
-            <h2 id="是时候驻足整装了"><a href="#是时候驻足整装了" class="headerlink" title="是时候驻足整装了"></a>是时候驻足整装了</h2><p>明年的业余时间会集中在这个StreamingCore项目上。进入直播行业也有六七年时间了，这将是我迄今的职业生涯中最重要的一份总结。</p>
-<p>如同其名，StreamingCore将是一套直播核心流程的解决方案，集成采集、编码、推流功能，同时支持Android和iOS两端。借鉴FFmpeg的设计思想，StreamingCore也会以模块化架构实现，允许独立使用某一功能模块。同一功能模块，或许会提供多套实现方案，以供比较选择。</p>
-<h2 id="暂拟定的功能模块"><a href="#暂拟定的功能模块" class="headerlink" title="暂拟定的功能模块"></a>暂拟定的功能模块</h2><h4 id="音频采集模块"><a href="#音频采集模块" class="headerlink" title="音频采集模块"></a>音频采集模块</h4><ul>
-<li>OpenSL ES implementation for Android</li>
-<li>AudioRecord implementation for Android</li>
-<li>Audio Unit implementation for iOS</li>
-</ul>
-<h4 id="图像采集模块"><a href="#图像采集模块" class="headerlink" title="图像采集模块"></a>图像采集模块</h4><ul>
-<li>Implementation based on Camera interface for Android</li>
-<li>Implementation based on Camera2 interface for Android</li>
-<li>Implementation based on Virtual Display for Android</li>
-<li>Implementation based on AVFoundation framework for iOS</li>
-<li>Implementation based on ReplayKit for iOS</li>
-</ul>
-<h4 id="音频编码模块"><a href="#音频编码模块" class="headerlink" title="音频编码模块"></a>音频编码模块</h4><ul>
-<li>Audio Encoder implementation based on MediaCodec for Android</li>
-<li>Audio Encoder implementation based on AudioToolBox for iOS</li>
-</ul>
-<h4 id="视频编码模块"><a href="#视频编码模块" class="headerlink" title="视频编码模块"></a>视频编码模块</h4><ul>
-<li>Video Encoder implementation based on MediaCodec for Android</li>
-<li>Video Encoder implementation based on VideoToolBox for iOS</li>
-</ul>
-<h4 id="推流模块"><a href="#推流模块" class="headerlink" title="推流模块"></a>推流模块</h4><ul>
-<li>Streaming by Rtmp Protocol</li>
-<li>Streaming by custom Protocol based on UDP</li>
-</ul>
-<p>各个模块将暴露标准化接口，供扩展实现。</p>
-<h2 id="我不喜欢Java和Objective-C"><a href="#我不喜欢Java和Objective-C" class="headerlink" title="我不喜欢Java和Objective-C"></a>我不喜欢Java和Objective-C</h2><p>或者反过来说，我喜欢Kotlin和Swift。够简洁，够现代化，这就足够了。公司业务已呈现尾大不掉、积重难返之态，更加之KPI当头，相关负责人没有勇气切换到新的开发环境。我已学的Kotlin，我想学的Swift，几无用武之地，这也是我萌生实施此项目的一个重要原因。</p>
-<p>同样基于这个技术决定，项目质量无从保证。成品后能否被接入方接受，就更难说了……</p>
-<h2 id="大概的开发计划"><a href="#大概的开发计划" class="headerlink" title="大概的开发计划"></a>大概的开发计划</h2><ul>
-<li>时间周期为一年（2020.1.1——2020.12.31）</li>
-<li>先Android端全功能，再iOS端</li>
-</ul>
+            <p>开发阶段用的是 <code>UnityEditor.EditorUtility.OpenFilePanel()</code> 函数，简单易用。但是如其名所示，<code>UnityEditor</code> 只在 Unity 编辑器内可见，尝试 build 出 Windows 下 standalone 包时会报编译错误。</p>
+<p>解决办法是用 mono 库下的相应功能实现打开文件。</p>
+<ol start="0">
+<li>在 Unity 安装根目录的 \Editor\Data\Mono\lib\mono\2.0\ 路径下找到并复制 <strong>System.Windows.Forms.dll</strong></li>
+<li>粘贴 dll 文件到 Unity 项目的 Assets\Plugins\ 目录</li>
+</ol>
+<p>此时，dll 在 Unity 项目中变为可见，可以在脚本文件中使用 dll 中任意功能了。</p>
+<p>选择文件对话框通过 <code>System.Windows.Forms.OpenFileDialog</code> 类实现，一个典型用法如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();</span><br><span class="line">ofd.Filter = &quot;Video Files(*.mp4;*.flv)|*.mp4;*.flv&quot;;</span><br><span class="line">ofd.RestoreDirectory = true;</span><br><span class="line">if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.OK)</span><br><span class="line">&#123;</span><br><span class="line">    return; // user clicked cancel.</span><br><span class="line">&#125;</span><br><span class="line">var filePath = ofd.FileName; //filePath holds the file&apos;s full path.</span><br></pre></td></tr></table></figure>
 
+<p>具体用例参考我的 <a href="https://github.com/LiangZuoting/XOPlayer/blob/master/XOPlayer/Assets/Scripts/PlayerManager.cs" target="_blank" rel="noopener">XOPlayer项目</a></p>
+<h3 id="issues"><a href="#issues" class="headerlink" title="issues:"></a>issues:</h3><ol start="0">
+<li>mono 实现的 OpenFileDialog 太丑了……是非基于宿主系统原生实现的。我用的 Unity 2018.4.14f1 提供的是 mono 2.0 版本，不知是否跟 mono 版本过旧有关。</li>
+</ol>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Unity/" rel="tag">Unity</a>, <a class="has-link-grey -link" href="/tags/mono/" rel="tag">mono</a>
+                </div>
+            </div>
         </div>
         
         
@@ -211,7 +193,19 @@
 
 
 
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/20/2020-planning/">
+                <span class="level-item">2020年学习规划</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -832,7 +826,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.png" alt="学海扁舟" height="28">
+                    <img src="/images/logo.png" alt="在 Unity 项目中使用 OpenFileDialog 实现选择文件功能" height="28">
                 
                 </a>
                 <p class="is-size-7">
