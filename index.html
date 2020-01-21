@@ -132,6 +132,51 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-21T12:20:44.000Z">2020-01-21</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 115 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/21/ffmpeg-often-used-commands/">FFmpeg 常用命令合集</a>
+            
+        </h1>
+        <div class="content">
+            <ol>
+<li>视频剪辑<br><code>ffmpeg -ss 300 -t 600 -i c:\input.mp4 c:\output.mp4</code><br>从 input.mp4 的 300s 处开始剪辑，时长 600s，保存到 output.mp4</li>
+</ol>
+<p><strong>note:</strong> -ss -t 参数都可应用于输入或输出(<code>ffmpeg -i c:\input.mp4 -ss 300 -t 600 c:\output.mp4</code>)上，区别在于：-ss 应用于输入时有性能优势，会先跳转到时间点再进行解码；用于输出时会逐帧解码并丢弃时间点前的所有帧。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-15T04:20:37.000Z">2020-01-15</time>
                 
                 <div class="level-item">
@@ -479,7 +524,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            5
+                            6
                         </p>
                     </a>
                 </div>
@@ -503,7 +548,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            4
+                            5
                         </p>
                     </a>
                 </div>
@@ -640,7 +685,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/Unity/" style="font-size: 10px;">Unity</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
     </div>
 </div>
     
@@ -652,6 +697,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/01/21/ffmpeg-often-used-commands/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="FFmpeg 常用命令合集">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-21T12:20:44.000Z">2020-01-21</time></div>
+                    <a href="/2020/01/21/ffmpeg-often-used-commands/" class="title has-link-black-ter is-size-6 has-text-weight-normal">FFmpeg 常用命令合集</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -729,25 +793,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/11/26/an-all-new-travel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="新旅程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-26T11:53:32.000Z">2019-11-26</time></div>
-                    <a href="/2019/11/26/an-all-new-travel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">新旅程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -765,7 +810,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -808,6 +853,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/FFmpeg/">
+                        <span class="tag">FFmpeg</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -857,6 +909,25 @@
         
         <article class="media">
             
+            <a href="/2020/01/21/ffmpeg-often-used-commands/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="FFmpeg 常用命令合集">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-21T12:20:44.000Z">2020-01-21</time></div>
+                    <a href="/2020/01/21/ffmpeg-often-used-commands/" class="title has-link-black-ter is-size-6 has-text-weight-normal">FFmpeg 常用命令合集</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/01/15/using-OpenFileDialog-in-Unity/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="在 Unity 项目中使用 OpenFileDialog 实现选择文件功能">
@@ -931,25 +1002,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/11/26/an-all-new-travel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="新旅程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-26T11:53:32.000Z">2019-11-26</time></div>
-                    <a href="/2019/11/26/an-all-new-travel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">新旅程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -967,7 +1019,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1010,6 +1062,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/FFmpeg/">
+                        <span class="tag">FFmpeg</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
