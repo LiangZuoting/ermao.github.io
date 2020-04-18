@@ -132,6 +132,103 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-17T04:18:36.000Z">2020-04-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1267 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/17/using-unity-to-develop-android-vr-application-1/">使用 Unity 开发 Android VR 应用系列之一——开发环境设置</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="0-读者定位"><a href="#0-读者定位" class="headerlink" title="0. 读者定位"></a>0. 读者定位</h3><ul>
+<li>熟悉 Android 开发</li>
+<li>对 C#/.NET 有一定了解</li>
+<li>想学习如何通过 Unity 开发 Android 应用</li>
+</ul>
+<p><strong>Unity 是微软旗下的跨平台游戏/应用开发工具，C# 自然成为其首推支持的前端开发语言。C# 虽是从 Java 脱胎而出，经过近二十年的独立发展，已经成长为一门明显优于 Java 的<em>现代化</em>语言（这当然是我个人的主观见解）。我也发愿以此项目为起点，重新掌握 C#/.NET 的技术体系。</strong></p>
+<h3 id="1-开发环境一览"><a href="#1-开发环境一览" class="headerlink" title="1. 开发环境一览"></a>1. 开发环境一览</h3><ul>
+<li>Windwos 10, 16 GB RAM, 1060 3GB+ 独显<blockquote>
+<p>Unity 对硬件具有一定要求，不仅指构建版本，开发过程中还需要频繁使用开发机运行调试项目，硬件配置对开发效率的影响还是比较大的。</p>
+</blockquote>
+</li>
+<li>Android Studio 环境（包括 SDK 和 NDK）<blockquote>
+<p>不确定 Unity 兼容所有 Android Studio 版本环境——毕竟 Android Studio 本身就存在比较显著的版本兼容性问题。所以如果你碰到项目配置相关的错误，建议尝试提高或降低 Android Studio/SDK/NDK 版本来解决。我个人的 Android Studio 环境是 Android Studio 3.5.3/SDK Platform 26/NDK r16b。</p>
+</blockquote>
+</li>
+<li><a href="https://unity3d.com/unity/qa/lts-releases?version=2018.4" target="_blank" rel="noopener">Unity 2018.4.14f1</a><blockquote>
+<p>Unity 存在多个并行版本，包括 2017/2018/2019 等系列。大版本间互不兼容，所以立项之初 Unity 版本选择是一个重要任务。<br>版本选择大概有几个原则：</p>
+<ul>
+<li>依赖方的要求，很多第三方 SDK 不保证兼容所有 Unity 版本</li>
+<li>优先使用 LTS (Long Term Support) 版本，LTS 意味着官方的持续维护，版本质量更高</li>
+<li>如果想体验所有新功能，优选 2019 版本；如果更注重产品的稳定性，优选 2018 版本。LTS 并不意味着会同步所有最新版本的大功能，所以 2018 LTS 的功能是弱于 2019 系列的</li>
+</ul>
+</blockquote>
+</li>
+<li>Visual Studio Community 2019<blockquote>
+<p>此项可选。通过一些渠道安装 Unity，会同时包含 Visual Studio Community 2017 的安装选项，这已经足够了。</p>
+</blockquote>
+</li>
+<li><a href="https://www.pico-interactive.com/cn/G2_4K.html" target="_blank" rel="noopener">Pico G2 4K 眼镜</a><blockquote>
+<p>我们应用的适配机型之一，我个人的最爱</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-首次运行设置"><a href="#2-首次运行设置" class="headerlink" title="2. 首次运行设置"></a>2. 首次运行设置</h3><p><strong>1) Unity 关联 Android 环境</strong></p>
+<p>启动 Unity，依次选中菜单项 Edit - Preferences - External Tools，显示如下:</p>
+<p><img src="/images/unity-android-vr-1/android-settings.jpg" alt></p>
+<p>按实际安装路径分别填充标注的两个选项。没有用到 NDK 时，此项可空。</p>
+<p><strong>2) Android App 构建配置</strong></p>
+<p>在 Unity 中依次选中菜单项 Edit - Project Settings，在弹出窗口中的左栏选中 Player 选项后，在右栏切换到 Android settings 标签页。</p>
+<p><img src="/images/unity-android-vr-1/android-player.jpg" alt></p>
+<p>选项繁多，不一一介绍。<strong><em>强烈建议对照文档熟练掌握所有选项含义，这是十分有意义的。</em></strong>这里仅介绍几个”高级”选项。</p>
+<p>2.1) 自定义 Gradle 脚本</p>
+<p><img src="/images/unity-android-vr-1/player-publish-build.jpg" alt></p>
+<p>选中 Publishing Settings 下拉菜单，勾选如上图标识选项。Unity 默认使用对用户隐藏的 gradle 脚本构建 App，使用自定义 gradle 脚本，给开发者提供了从更细粒度上干预构建过程的能力。</p>
+<p>2.2) C# 脚本配置</p>
+<p><img src="/images/unity-android-vr-1/player-other-config.jpg" alt></p>
+<p>在 Other Settings 下拉菜单中，按上图所示设置各选项。将 .NET 运行时版本提升到 4.x 的原因是可以使用 <a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/whats-new/csharp-6" target="_blank" rel="noopener">C# 6.0 特性</a>。</p>
+<p><strong>3) Unity 关联 Visual Studio</strong></p>
+<p>Preferences 窗口中的 External Tools 标签页中，有如下选项</p>
+<p><img src="/images/unity-android-vr-1/editor-settings.jpg" alt></p>
+<p>如果你的 Visual Studio 是通过 Unity 安装器打包安装，这里已经自动关联；如果想手动切换到其它 Visual Studio 实例，可以通过点击这里，浏览本地安装目录，找到并选中 <code>devenv.exe</code> 即可。<br>如果这里没有配置正确，在 Visual Studio 中打开脚本文件后将不能成功<a href="https://docs.microsoft.com/zh-cn/visualstudio/ide/using-intellisense?view=vs-2019" target="_blank" rel="noopener">自动感知</a>，且不能通过 “附加到 Unity” 功能实时调试脚本。虽然不影响脚本的正常编译，对开发效率无疑是巨大打击。</p>
+<h3 id="3-后记"><a href="#3-后记" class="headerlink" title="3. 后记"></a>3. 后记</h3><p>文中所记并非一个完整的 “Unity 下开发 Android App 配置流程”，此种教程文档网络上已数不胜数，我也是参照此类文章迈出的第一步。<br>此文的价值，恰恰在于它是对此类千篇一律的入门流水账的一个重要补充，是我开发过程中一些痛苦教训的精炼提取，可以让你的第一步迈得更扎实。<br>叙事的同时，也掺杂了很多我个人的理解。限于认知，如有冒犯或错误或词不达意等负面情绪传递，凡此种种，请留言指正，谢谢。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-02-02T01:31:11.000Z">2020-02-02</time>
                 
                 <div class="level-item">
@@ -640,7 +737,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            7
+                            8
                         </p>
                     </a>
                 </div>
@@ -664,7 +761,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            6
+                            7
                         </p>
                     </a>
                 </div>
@@ -788,7 +885,7 @@
                 <span class="level-item">Unity</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/%E6%9D%82%E8%AE%B0/">
@@ -809,7 +906,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/VideoPlayer/" style="font-size: 10px;">VideoPlayer</a> <a href="/tags/XOPlayer/" style="font-size: 10px;">XOPlayer</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/VR/" style="font-size: 10px;">VR</a> <a href="/tags/VideoPlayer/" style="font-size: 10px;">VideoPlayer</a> <a href="/tags/XOPlayer/" style="font-size: 10px;">XOPlayer</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
     </div>
 </div>
     
@@ -821,6 +918,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/17/using-unity-to-develop-android-vr-application-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="使用 Unity 开发 Android VR 应用系列之一——开发环境设置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-17T04:18:36.000Z">2020-04-17</time></div>
+                    <a href="/2020/04/17/using-unity-to-develop-android-vr-application-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">使用 Unity 开发 Android VR 应用系列之一——开发环境设置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -898,25 +1014,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/12/19/about-streaming-core/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="StreamingCore项目介绍">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time></div>
-                    <a href="/2019/12/19/about-streaming-core/" class="title has-link-black-ter is-size-6 has-text-weight-normal">StreamingCore项目介绍</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/StreamingCore/">StreamingCore</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -927,6 +1024,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/02/">
@@ -995,7 +1103,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Unity/">
                         <span class="tag">Unity</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VR/">
+                        <span class="tag">VR</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1051,6 +1166,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/17/using-unity-to-develop-android-vr-application-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="使用 Unity 开发 Android VR 应用系列之一——开发环境设置">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-17T04:18:36.000Z">2020-04-17</time></div>
+                    <a href="/2020/04/17/using-unity-to-develop-android-vr-application-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">使用 Unity 开发 Android VR 应用系列之一——开发环境设置</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/02/xoplayer-phased-summary/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="XOPlayer 阶段性总结——使用 Unity 的 VideoPlayer 组件开发全景播放器">
@@ -1125,25 +1259,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/12/19/about-streaming-core/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="StreamingCore项目介绍">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T09:27:28.000Z">2019-12-19</time></div>
-                    <a href="/2019/12/19/about-streaming-core/" class="title has-link-black-ter is-size-6 has-text-weight-normal">StreamingCore项目介绍</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/StreamingCore/">StreamingCore</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1154,6 +1269,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/02/">
@@ -1222,7 +1348,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Unity/">
                         <span class="tag">Unity</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/VR/">
+                        <span class="tag">VR</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
