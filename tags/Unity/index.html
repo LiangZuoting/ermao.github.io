@@ -142,6 +142,88 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-21T05:38:03.000Z">2020-04-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 707 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/21/using-animator-to-scale-ui-when-hover/">使用 Unity 开发 Android VR 应用系列之二——使用 Animator 实现鼠标悬浮 UI 缩放动画效果</a>
+            
+        </h1>
+        <div class="content">
+            <h3 id="0-概览"><a href="#0-概览" class="headerlink" title="0. 概览"></a>0. 概览</h3><p>展示效果如下</p>
+<p><img src="/images/unity-android-vr-2/demo.gif" alt></p>
+<p><strong>完整的代码和示例<a href="https://github.com/LiangZuoting/Unity-HoverAnimatorDemo" target="_blank" rel="noopener">在这里</a></strong></p>
+<p>实现上图所示的动画效果，涉及两个 Unity 知识点：</p>
+<ul>
+<li>Animator 组件</li>
+<li>动态调整 UI 渲染顺序</li>
+</ul>
+<h3 id="1-使用-Animator-实现缩放动画"><a href="#1-使用-Animator-实现缩放动画" class="headerlink" title="1. 使用 Animator 实现缩放动画"></a>1. 使用 Animator 实现缩放动画</h3><p>Animator 是一套灵活度跟复杂度同样高的动画系统。<br>简单来讲，其运作原理是：定义若干 <strong>Animation Clip</strong>，将其在 <strong>Animator Controller</strong> 中通过 <strong>Transition</strong> 拼装成一个状态机；创建若干 <strong>Parameters</strong>，用户通过为其赋不同值控制状态转移。</p>
+<p>套用到本例来说，就是：</p>
+<ol>
+<li>创建两个 Animation Clip，一个用于放大，一个用于缩小</li>
+<li>创建一个 Animator Controller，在其中创建两个状态，分别对应上边两个 Animation Clip</li>
+<li>创建一个 bool 参数 hovering，射线进入时为 true，射线移开时为 false</li>
+<li>创建两个 Transition，分别使 hovering = true 时执行放大动画，hovering = false 时执行缩小动画</li>
+</ol>
+<p>最终，Animator Controller 中呈现如下的状态图：</p>
+<p><img src="/images/unity-android-vr-2/controller.jpg" alt></p>
+<h3 id="2-使用-Canvas-组件实现动态调整渲染顺序"><a href="#2-使用-Canvas-组件实现动态调整渲染顺序" class="headerlink" title="2. 使用 Canvas 组件实现动态调整渲染顺序"></a>2. 使用 Canvas 组件实现动态调整渲染顺序</h3><p>默认的 UI 渲染顺序是按其在场景中出现的先后顺序定义的。带来的一个问题是：当对靠前的 UI 做放大动画时，有可能和后面的 UI 重叠，导致当前选中 UI 被遮挡。</p>
+<p>可以通过为 UI 添加 Canvas 组件解决此问题。</p>
+<p><img src="/images/unity-android-vr-2/canvas.jpg" alt></p>
+<p><strong>注意图中的 Graphic Raycaster 组件，需要同 Canvas 成对出现，否则 UI 不能正常处理射线事件。</strong></p>
+<p>内嵌的 Canvas 具有上图所示的属性。勾选 Override Sorting 后，通过修改 Order in Layer 项值即可自定义当前 UI 的渲染顺序，值越大，渲染顺序越靠后。</p>
+<p>脚本代码如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 添加 Canvas 和 GraphicRaycaster 组件</span><br><span class="line">if (topWhenHover) // 仅在需要时动态添加相应组件</span><br><span class="line">&#123;</span><br><span class="line">    if (GetComponent&lt;Canvas&gt;() == null)</span><br><span class="line">    &#123;</span><br><span class="line">        gameObject.AddComponent&lt;Canvas&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    if (GetComponent&lt;GraphicRaycaster&gt;() == null)</span><br><span class="line">    &#123;</span><br><span class="line">        gameObject.AddComponent&lt;GraphicRaycaster&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// hover 状态变化时</span><br><span class="line">private void OnHoverChanged(bool hover)</span><br><span class="line">&#123;</span><br><span class="line">    if (topWhenHover)</span><br><span class="line">    &#123;</span><br><span class="line">        var canvas = GetComponent&lt;Canvas&gt;();</span><br><span class="line">        canvas.overrideSorting = hover;</span><br><span class="line">        canvas.sortingOrder = sortingOrder;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-把所有功能封装到一个自定义组件中"><a href="#3-把所有功能封装到一个自定义组件中" class="headerlink" title="3. 把所有功能封装到一个自定义组件中"></a>3. 把所有功能封装到一个自定义组件中</h3><p>可以实现一个高度封装的组件：用户只需要添加此组件，即可自动监听射线进出事件并执行动画。</p>
+<h4 id="1-使组件能接收射线进出事件"><a href="#1-使组件能接收射线进出事件" class="headerlink" title="1. 使组件能接收射线进出事件"></a>1. 使组件能接收射线进出事件</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 实现对应接口</span><br><span class="line">public class HoverScaler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler</span><br><span class="line">&#123;</span><br><span class="line">    public void OnPointerEnter(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        OnHoverChanged(true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void OnPointerExit(PointerEventData eventData)</span><br><span class="line">    &#123;</span><br><span class="line">        OnHoverChanged(false);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-添加-Animator-组件到-UI"><a href="#2-添加-Animator-组件到-UI" class="headerlink" title="2. 添加 Animator 组件到 UI"></a>2. 添加 Animator 组件到 UI</h4><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        animator = gameObject.AddComponent&lt;Animator&gt;();</span><br><span class="line">        var controller = Resources.Load&lt;RuntimeAnimatorController&gt;(&quot;Animations/ScaleWhenHover&quot;);</span><br><span class="line">        animator.runtimeAnimatorController = Instantiate(controller);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>完整的组件实现<a href="https://github.com/LiangZuoting/Unity-HoverAnimatorDemo/blob/master/Assets/HoverScaler.cs" target="_blank" rel="noopener">在这里</a></strong></p>
+<h3 id="4-Issues"><a href="#4-Issues" class="headerlink" title="4. Issues"></a>4. Issues</h3><ul>
+<li>修改 Canvas 的 sortingOrder 属性，会使其父 UI 的 mask 功能失效（demo 有演示）</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-17T04:18:36.000Z">2020-04-17</time>
                 
                 <div class="level-item">
@@ -447,7 +529,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            8
+                            9
                         </p>
                     </a>
                 </div>
@@ -471,7 +553,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            7
+                            8
                         </p>
                     </a>
                 </div>
@@ -595,7 +677,7 @@
                 <span class="level-item">Unity</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/%E6%9D%82%E8%AE%B0/">
@@ -616,7 +698,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/VR/" style="font-size: 10px;">VR</a> <a href="/tags/VideoPlayer/" style="font-size: 10px;">VideoPlayer</a> <a href="/tags/XOPlayer/" style="font-size: 10px;">XOPlayer</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
+        <a href="/tags/Animator/" style="font-size: 10px;">Animator</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/VR/" style="font-size: 10px;">VR</a> <a href="/tags/VideoPlayer/" style="font-size: 10px;">VideoPlayer</a> <a href="/tags/XOPlayer/" style="font-size: 10px;">XOPlayer</a> <a href="/tags/mono/" style="font-size: 10px;">mono</a> <a href="/tags/%E8%A5%BF%E5%AE%89/" style="font-size: 10px;">西安</a>
     </div>
 </div>
     
@@ -628,6 +710,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/21/using-animator-to-scale-ui-when-hover/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="使用 Unity 开发 Android VR 应用系列之二——使用 Animator 实现鼠标悬浮 UI 缩放动画效果">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-21T05:38:03.000Z">2020-04-21</time></div>
+                    <a href="/2020/04/21/using-animator-to-scale-ui-when-hover/" class="title has-link-black-ter is-size-6 has-text-weight-normal">使用 Unity 开发 Android VR 应用系列之二——使用 Animator 实现鼠标悬浮 UI 缩放动画效果</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -705,25 +806,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/12/20/2020-planning/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="2020年学习规划">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-20T06:25:48.000Z">2019-12-20</time></div>
-                    <a href="/2019/12/20/2020-planning/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年学习规划</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -741,7 +823,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -804,6 +886,13 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Animator/">
+                        <span class="tag">Animator</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
                         <span class="tag is-grey">1</span>
@@ -813,7 +902,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Unity/">
                         <span class="tag">Unity</span>
-                        <span class="tag is-grey">3</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -876,6 +965,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/21/using-animator-to-scale-ui-when-hover/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="使用 Unity 开发 Android VR 应用系列之二——使用 Animator 实现鼠标悬浮 UI 缩放动画效果">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-21T05:38:03.000Z">2020-04-21</time></div>
+                    <a href="/2020/04/21/using-animator-to-scale-ui-when-hover/" class="title has-link-black-ter is-size-6 has-text-weight-normal">使用 Unity 开发 Android VR 应用系列之二——使用 Animator 实现鼠标悬浮 UI 缩放动画效果</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Unity/">Unity</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/17/using-unity-to-develop-android-vr-application-1/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="使用 Unity 开发 Android VR 应用系列之一——开发环境设置">
@@ -950,25 +1058,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/12/20/2020-planning/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="2020年学习规划">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-20T06:25:48.000Z">2019-12-20</time></div>
-                    <a href="/2019/12/20/2020-planning/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年学习规划</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -986,7 +1075,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1049,6 +1138,13 @@
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Animator/">
+                        <span class="tag">Animator</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
                         <span class="tag is-grey">1</span>
@@ -1058,7 +1154,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Unity/">
                         <span class="tag">Unity</span>
-                        <span class="tag is-grey">3</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
