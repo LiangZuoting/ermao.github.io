@@ -64,7 +64,7 @@
 <li>进度条 Slider 不能拖动（OnValueChanged 死循环）</li>
 <li>全景视频变糊（存疑）</li>
 </ul>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-01-21T12:20:44.000Z" title="2020-01-21T12:20:44.000Z">2020-01-21</time><span class="level-item"><a class="link-muted" href="/categories/FFmpeg/">FFmpeg</a></span><span class="level-item">3 minutes read (About 453 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/01/21/FFmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/">FFmpeg 常用命令合集</a></h1><div class="content"><ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-01-21T12:20:44.000Z" title="2020-01-21T12:20:44.000Z">2020-01-21</time><span class="level-item"><a class="link-muted" href="/categories/FFmpeg/">FFmpeg</a></span><span class="level-item">4 minutes read (About 602 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/01/21/FFmpeg%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E9%9B%86/">FFmpeg 常用命令合集</a></h1><div class="content"><ul>
 <li>视频剪辑</li>
 </ul>
 <p><code>ffmpeg -ss 300 -t 600 -i c:\input.mp4 c:\output.mp4</code></p>
@@ -96,6 +96,16 @@
 <blockquote>
 <p>把 gif 放在 mp4 的左上角。<code>-stream_loop -1</code> 指示 gif 不断循环，否则 gif 会停留在最后一帧；<code>shortest=1</code> 指示 overlay 操作在任意一个输入读取到文件尾时结束。</p>
 <p><strong>note:</strong> <code>stream_loop</code> 是输入项参数，所以要放在要应用的输入的后面。</p>
+</blockquote>
+<ul>
+<li>视频滚动</li>
+</ul>
+<p><code>ffmpeg -i input.mp4 -filter_complex &quot;split[o1][o2];[o1]select=between(n\,0\,100),scroll=h=0.01[oo1];[o2]select=gt(n\,100),setpts=N/FR/TB[oo2];[oo1][oo2]concat=n=2:v=1&quot; -map 0:a output.mp4</code></p>
+<blockquote>
+<p>把输入 mp4 前 100 帧做成由右到左的滚动效果。</p>
+<p>scroll 的速率是每帧行进的视频宽/高的百分比。0.01 即每帧位移 0.01 * width 像素，所以整个滚动效果需要 100 帧。</p>
+<p><strong>note:</strong> </p>
+<p>1) 第二段 select，必须从 0 重新计算 pts，否则拼接时候效果不对；<br>2) 此法只适合短小视频操作，因为所有滤镜效果都缓存在内存。</p>
 </blockquote>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-01-15T04:20:37.000Z" title="2020-01-15T04:20:37.000Z">2020-01-15</time><span class="level-item"><a class="link-muted" href="/categories/Unity/">Unity</a></span><span class="level-item">2 minutes read (About 308 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/01/15/Unity%E4%B8%AD%E7%94%A8OpenFileDialog%E5%AE%9E%E7%8E%B0%E9%80%89%E6%8B%A9%E6%96%87%E4%BB%B6%E5%8A%9F%E8%83%BD/">在 Unity 项目中使用 OpenFileDialog 实现选择文件功能</a></h1><div class="content"><p>开发阶段用的是 <code>UnityEditor.EditorUtility.OpenFilePanel()</code> 函数，简单易用。但是如其名所示，<code>UnityEditor</code> 只在 Unity 编辑器内可见，尝试 build 出 Windows 下 standalone 包时会报编译错误。</p>
 <p>解决办法是用 mono 库下的相应功能实现打开文件。</p>
