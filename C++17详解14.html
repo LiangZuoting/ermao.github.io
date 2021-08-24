@@ -1,105 +1,71 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, C++17, C++17详解, C++17 in detail, 折叠表达式"><title>C++17 详解 12 - 学海扁舟</title><meta description="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"><meta property="og:type" content="blog"><meta property="og:title" content="C++17 详解 12"><meta property="og:url" content="https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2021-08-18T04:10:34.000Z"><meta property="article:modified_time" content="2021-08-18T05:48:17.663Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="C++"><meta property="article:tag" content=" C++17"><meta property="article:tag" content=" C++17详解"><meta property="article:tag" content=" C++17 in detail"><meta property="article:tag" content=" 折叠表达式"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"},"headline":"学海扁舟","image":["https://ermao.live/img/og_image.png"],"datePublished":"2021-08-18T04:10:34.000Z","dateModified":"2021-08-18T05:48:17.663Z","author":{"@type":"Person","name":"Liang Zuoting"},"description":"本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"}</script><link rel="canonical" href="https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-8M30J3ZL6W" async></script><script>window.dataLayer = window.dataLayer || [];
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, C++17, C++17详解, C++17 in detail, C++模版"><title>C++17 详解 14 - 学海扁舟</title><meta description="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.4 用 auto 声明非类型模版参数这是在任何地方使用 auto 策略的另一部分。C++11&amp;#x2F;14 里你可以利用 auto 自动推断变量甚至返回值的类型，另外还有泛型 lambda。现在你也可以利用它推断非类型模版参数了。 比如： 12template &amp;lt;auto value&amp;gt; void f("><meta property="og:type" content="blog"><meta property="og:title" content="C++17 详解 14"><meta property="og:url" content="https://ermao.live/C++17%E8%AF%A6%E8%A7%A314.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.4 用 auto 声明非类型模版参数这是在任何地方使用 auto 策略的另一部分。C++11&amp;#x2F;14 里你可以利用 auto 自动推断变量甚至返回值的类型，另外还有泛型 lambda。现在你也可以利用它推断非类型模版参数了。 比如： 12template &amp;lt;auto value&amp;gt; void f("><meta property="og:locale" content="en_US"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2021-08-24T04:10:36.000Z"><meta property="article:modified_time" content="2021-08-24T06:03:30.934Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="C++"><meta property="article:tag" content=" C++17"><meta property="article:tag" content=" C++17详解"><meta property="article:tag" content=" C++17 in detail"><meta property="article:tag" content=" C++模版"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/C++17%E8%AF%A6%E8%A7%A314.html"},"headline":"学海扁舟","image":["https://ermao.live/img/og_image.png"],"datePublished":"2021-08-24T04:10:36.000Z","dateModified":"2021-08-24T06:03:30.934Z","author":{"@type":"Person","name":"Liang Zuoting"},"description":"本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.4 用 auto 声明非类型模版参数这是在任何地方使用 auto 策略的另一部分。C++11&#x2F;14 里你可以利用 auto 自动推断变量甚至返回值的类型，另外还有泛型 lambda。现在你也可以利用它推断非类型模版参数了。 比如： 12template &lt;auto value&gt; void f("}</script><link rel="canonical" href="https://ermao.live/C++17%E8%AF%A6%E8%A7%A314.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-8M30J3ZL6W" async></script><script>window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
-        gtag('config', 'G-8M30J3ZL6W');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-08-18T04:10:34.000Z" title="2021-08-18T04:10:34.000Z">2021-08-18</time><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a><span> / </span><a class="link-muted" href="/categories/C/C-17/">C++17</a><span> / </span><a class="link-muted" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/">C++17详解</a></span><span class="level-item">5 minutes read (About 782 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">C++17 详解 12</h1><div class="content"><blockquote>
+        gtag('config', 'G-8M30J3ZL6W');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-08-24T04:10:36.000Z" title="2021-08-24T04:10:36.000Z">2021-08-24</time><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a><span> / </span><a class="link-muted" href="/categories/C/C-17/">C++17</a><span> / </span><a class="link-muted" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/">C++17详解</a></span><span class="level-item">6 minutes read (About 931 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">C++17 详解 14</h1><div class="content"><blockquote>
 <p>本文为 <a href="https://www.cppindetail.com/">《C++17 in detail》</a> 一书的中文渣中渣译文，不足之处还望指正。</p>
 </blockquote>
-<h3 id="4-2-折叠表达式"><a href="#4-2-折叠表达式" class="headerlink" title="4.2 折叠表达式"></a>4.2 折叠表达式</h3><p>C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。</p>
+<h3 id="4-4-用-auto-声明非类型模版参数"><a href="#4-4-用-auto-声明非类型模版参数" class="headerlink" title="4.4 用 auto 声明非类型模版参数"></a>4.4 用 <code>auto</code> 声明非类型模版参数</h3><p>这是在任何地方使用 auto 策略的另一部分。C++11/14 里你可以利用 auto 自动推断变量甚至返回值的类型，另外还有泛型 lambda。现在你也可以利用它推断非类型模版参数了。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">auto</span> value&gt; <span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">f&lt;<span class="number">10</span>&gt;(); <span class="comment">// 推断为 int</span></span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<p>当你想实现类似 sum 这样的递归函数时，可变参模版仍然需要一些额外的代码。你必须指明递归规则。</p>
-<p>比如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">SumCpp11</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span>... T&gt;</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">SumCpp11</span><span class="params">(T1 s, T... ts)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s + SumCpp11(ts...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这很实用，因为你不必为指明非类型参数的类型而添加一个独立的参数了。</p>
+<p>比如 C++11/14 里：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type, Type value&gt; <span class="keyword">constexpr</span> Type TConstant = value;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="keyword">const</span> MySuperConst = TConstant&lt;<span class="keyword">int</span>, <span class="number">100</span>&gt;;</span><br></pre></td></tr></table></figure>
 
-<p>通过 C++17 我们可以把代码写得更简单:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ... + <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者甚至:</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum2</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C++17 里代码能稍稍简洁一点：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">auto</span> value&gt; <span class="keyword">constexpr</span> <span class="keyword">auto</span> TConstant = value;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <span class="keyword">const</span> MySuperConst = TConstant&lt;<span class="number">100</span>&gt;;</span><br></pre></td></tr></table></figure>
 
-<p>有如下几种使用二元操作符的折叠表达式的变种：</p>
-<table>
-<thead>
-<tr>
-<th align="left">表达式</th>
-<th align="left">名称</th>
-<th align="left">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>(... op e)</code></td>
-<td align="left">一元左折叠</td>
-<td align="left"><code>((e1 op e2) op ...) op eN</code></td>
-</tr>
-<tr>
-<td align="left"><code>(init op ... op e)</code></td>
-<td align="left">二元左折叠</td>
-<td align="left"><code>(((init op e1) op e2) op ...) op eN</code></td>
-</tr>
-<tr>
-<td align="left"><code>(e op ...)</code></td>
-<td align="left">一元右折叠</td>
-<td align="left"><code>e1 op (... op (eN-1 op eN))</code></td>
-</tr>
-<tr>
-<td align="left"><code>(e op ... op init)</code></td>
-<td align="left">二元右折叠</td>
-<td align="left"><code>e1 op (... op (eN-1 op (eN op init)))</code></td>
-</tr>
-</tbody></table>
+<p>不需要再显式地写明 Type 了。</p>
+<p>异构编译时链表作为一种进阶用法在大量论文、文章中被引用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">auto</span> ... vs&gt; <span class="class"><span class="keyword">struct</span> <span class="title">HeterogenousValueList</span> &#123;</span>&#125;;</span><br><span class="line"><span class="keyword">using</span> MyList = HeterogenousValueList&lt;<span class="string">'a'</span>, <span class="number">100</span>, <span class="string">'b'</span>&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>C++17 之前是不可能直接声明这样一个链表的，首先必须提供某种封装类。</p>
 <blockquote>
-<p>译注：注意，<strong>折叠表达式外层必须有一个括号</strong>。</p>
+<p>扩展：本修改提案：<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0127r2.html">P0127R2</a>。在 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0127r1.html">P0127R1</a> 里有更多示例和讨论。</p>
 </blockquote>
-<p><code>op</code> 可以是下边 32 种二元操作符中的任意一个：<code>+ - * / % ^ &amp; | = &lt; &gt; &lt;&lt; &gt;&gt; += -= *= /= %=
-^= &amp;= |= &lt;&lt;= &gt;&gt;= == != &lt;= &gt;= &amp;&amp; || , .* -&gt;*</code> 。在一个二元折叠里，两个 <code>op</code> 必须一样。</p>
-<p>比如，当你写下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum2</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ...); <span class="comment">// unary right fold over '+'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> value = sum2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
-
-<p>模版函数被展开为：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> value = <span class="number">1</span> + (<span class="number">2</span> + (<span class="number">3</span> + <span class="number">4</span>));</span><br></pre></td></tr></table></figure>
-
-<p>对空参数包，默认得到下列值：</p>
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&amp;&amp;</td>
-<td align="left"><code>true</code></td>
-</tr>
-<tr>
-<td align="left">&#124;&#124;</td>
-<td align="left"><code>false</code></td>
-</tr>
-<tr>
-<td align="left">,</td>
-<td align="left"><code>void()</code></td>
-</tr>
-<tr>
-<td align="left">其它</td>
-<td align="left">错误</td>
-</tr>
-</tbody></table>
-<p>这也是为什么你不能不带任何参数调用 <code>sum2</code>，因为 <code>+</code> 操作符上的一元折叠对空参数列表没有任何默认值。</p>
-<p><strong>更多示例</strong></p>
-<p>这里有一个使用折叠的非常好的 <code>printf</code> 实现 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0036r0.pdf">P0036R0</a>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FoldPrint</span><span class="params">(Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    (<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ... &lt;&lt; <span class="built_in">std</span>::forward&lt;Args&gt;(args)) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FoldPrint(<span class="string">"hello"</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
-
-<p>但是上边的 <code>FoldPrint</code> 一个接一个地打印参数，没有任何分隔符。所以你会看到 “hello102030” 这样的输出。</p>
-<p>如果想要分隔符和其它更多格式化选项，你必须调整打印技巧，在逗号操作符上使用折叠：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FoldSeparateLine</span><span class="params">(Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> separateLine = [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; v &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    (... , separateLine (<span class="built_in">std</span>::forward&lt;Args&gt;(args))); <span class="comment">// over comma operator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这种通过逗号操作符使用折叠的技巧很方便。另一个例子是一个 <code>push_back</code> 的特殊版本：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back_vec</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt;&amp; v, Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    (v.push_back(<span class="built_in">std</span>::forward&lt;Args&gt;(args)), ...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">float</span>&gt; vf;</span><br><span class="line">push_back_vec(vf, <span class="number">10.5f</span>, <span class="number">0.7f</span>, <span class="number">1.1f</span>, <span class="number">0.89f</span>);</span><br></pre></td></tr></table></figure>
-
-<p>一般来讲，折叠表达式能让你写出更清晰、更短小、也可能读起来更令人愉悦的代码。</p>
+<h3 id="4-5-其它修改"><a href="#4-5-其它修改" class="headerlink" title="4.5 其它修改"></a>4.5 其它修改</h3><p>C++17 里还有其它一些跟模版相关的语言特性值得一提：</p>
+<p><strong>允许在模版的模版参数中使用 typename</strong></p>
 <blockquote>
-<p>扩展：本修改提案：<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4295.html">N4295</a> 和 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0036r0.pdf">P0036R0</a>。</p>
+<p>译注：模版的模版参数（template template parameters），参数为模版的模版。</p>
 </blockquote>
-</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a><a class="link-muted mr-2" rel="tag" href="/tags/C-17/">C++17</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Buy Me A Coffee</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/images/alipay.jpg" alt="Alipay"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/images/wechat.JPG" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/C++17%E8%AF%A6%E8%A7%A313.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">C++17 详解 13</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Windows-%E4%B8%8B-Qt-Installer-Framework-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91.html"><span class="level-item">Windows 下 Qt Installer Framework 源码编译</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
-            id: 'a3658a3d5bfa02f888a14e2266dc72e1',
+<p>声明模版的模版参数时允许使用 typename 代替 class 关键字。普通类型参数可以互换使用两者，但是之前模版的模版参数被限制为只能使用 class。</p>
+<p>更多信息参考 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4051.html">N4051</a>。</p>
+<p><strong>允许对所有非类型模版实参进行常量估算</strong></p>
+<p>移除对指针、引用、成员指针作为非类型模版参数时的语法限制。</p>
+<p>更多信息参考 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4268.html">N4268</a>。</p>
+<p><strong>萃取中的变量模版</strong></p>
+<p>所有产出 ::value 的类型萃取都有一个伴随的 _v 变量模版。比如：</p>
+<p><code>std::is_integral&lt;T&gt;::value</code> 可以变成 <code>std::is_integral_v&lt;T&gt;</code></p>
+<p><code>std::is_class&lt;T&gt;::value</code> 可以变成 <code>std::is_class_v&lt;T&gt;</code></p>
+<p>此改进源自 C++14 对返回 ::type 类型萃取添加的 _t 后缀（类型别名）。</p>
+<p>更多信息参考 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0006r0.html">P0006R0</a>。</p>
+<p><strong>using 声明中的包展开</strong></p>
+<p>此特性是对可变参模版和参数包的加强。</p>
+<p>现在编译器支持在包扩展中使用 using 关键字：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span>... <span class="title">Ts</span>&gt; <span class="title">struct</span> <span class="title">overloaded</span> :</span> Ts... &#123;</span><br><span class="line"><span class="keyword">using</span> Ts::<span class="keyword">operator</span>()...;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>overloaded 类暴露所有来自基类的 operator() 重载版本。C++17 之前你必须递归使用参数包以实现相同结果。 overloaded 模式是对 std::visit 一个很有用的加强，在（后边）Variant 一章的 Overload 小节有更多讨论。</p>
+<p>更多信息参考 <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0195r2.html">P0195</a>。</p>
+<p><strong>逻辑操作元函数</strong></p>
+<p>C++17 添加了一些趁手的模版元函数：</p>
+<ul>
+<li><code>template&lt;class... B&gt; struct conjunction;</code> - 逻辑与</li>
+<li><code>template&lt;class... B&gt; struct disjunction;</code> - 逻辑或</li>
+<li><code>template&lt;class B&gt; struct negation;</code> - 逻辑非</li>
+</ul>
+<p>这里是一份基于提案代码的示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt;</span><br><span class="line"><span class="built_in">std</span>::<span class="keyword">enable_if_t</span>&lt;<span class="built_in">std</span>::conjunction_v&lt;<span class="built_in">std</span>::is_same&lt;<span class="keyword">int</span>, Ts&gt;...&gt; &gt;</span><br><span class="line">PrintIntegers(Ts ... args)</span><br><span class="line">&#123;</span><br><span class="line">    (<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ... &lt;&lt; args) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PrintIntegers 函数同一组可变数量的参数一起工作，但是参数必须都是 int 类型。</p>
+<p>这些辅助类元函数能提高复杂模版代码的可读性。</p>
+<p>更多信息参考 <a href="https://wg21.link/P0013">P0013</a>。</p>
+<h3 id="4-6-编译器支持"><a href="#4-6-编译器支持" class="headerlink" title="4.6 编译器支持"></a>4.6 编译器支持</h3><p>略。</p>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a><a class="link-muted mr-2" rel="tag" href="/tags/C-17/">C++17</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Buy Me A Coffee</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/images/alipay.jpg" alt="Alipay"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/images/wechat.JPG" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/C++17%E8%AF%A6%E8%A7%A313.html"><span class="level-item">C++17 详解 13</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: '41eb783873deae743215df7cad436a80',
             repo: 'liangzuoting.github.io',
             owner: 'liangzuoting',
             clientID: '5587c60ec2385aa56f68',
