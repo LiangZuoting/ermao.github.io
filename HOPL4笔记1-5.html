@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, FFmpeg, 智能家居, Python, 全栈"><title>HOPL4 笔记 1-5 - 学海扁舟</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="学海扁舟"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="学海扁舟"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  1. 前言 有一种流传广泛的谬见，就是程序员希望他们的语言是简单的。 当你不得不学习一门新的语言、不得不设计一门编程课程、或是在学术论文中描述"><meta property="og:type" content="blog"><meta property="og:title" content="HOPL4 笔记 1-5"><meta property="og:url" content="https://ermao.live/HOPL4%E7%AC%94%E8%AE%B01-5.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  1. 前言 有一种流传广泛的谬见，就是程序员希望他们的语言是简单的。 当你不得不学习一门新的语言、不得不设计一门编程课程、或是在学术论文中描述"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2022-01-27T02:04:43.000Z"><meta property="article:modified_time" content="2022-01-28T08:33:04.890Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/HOPL4%E7%AC%94%E8%AE%B01-5.html"},"headline":"HOPL4 笔记 1-5","image":["https://ermao.live/img/og_image.png"],"datePublished":"2022-01-27T02:04:43.000Z","dateModified":"2022-01-28T08:33:04.890Z","author":{"@type":"Person","name":"Liang Zuoting"},"publisher":{"@type":"Organization","name":"学海扁舟","logo":{"@type":"ImageObject","url":"https://ermao.live/img/logo.png"}},"description":"HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  1. 前言 有一种流传广泛的谬见，就是程序员希望他们的语言是简单的。 当你不得不学习一门新的语言、不得不设计一门编程课程、或是在学术论文中描述"}</script><link rel="canonical" href="https://ermao.live/HOPL4%E7%AC%94%E8%AE%B01-5.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600&amp;family=Roboto+Mono"><link rel="stylesheet" href="/css/cyberpunk.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Welcome To My GitHub" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-01-27T02:04:43.000Z" title="2022/1/27 上午10:04:43">2022-01-27</time>发表</span><span class="level-item"><time dateTime="2022-01-28T08:33:04.890Z" title="2022/1/28 下午4:33:04">2022-01-28</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a><span> / </span><a class="link-muted" href="/categories/C/HOPL4/">HOPL4</a></span><span class="level-item">21 分钟读完 (大约3122个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">HOPL4 笔记 1-5</h1><div class="content"><blockquote>
+<p>HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。<br>这是我父的第三篇 HOPL 论文，发表于 2021 年。<a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh">中文译本</a> 出自 <a target="_blank" rel="noopener" href="http://boolan.com/">Boolan</a> 之手，不胜感激。</p>
+</blockquote>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/01.md">前言</a></h1><blockquote>
+<p>有一种流传广泛的谬见，就是程序员希望他们的语言是简单的。 当你不得不学习一门新的语言、不得不设计一门编程课程、或是在学术论文中描述一门语言时，追求简单显然是实情。 对于这样的用途，让语言干净地体现一些明确的原则是一个明显的优势，也是理想情况。 当开发人员的焦点从学习转移到交付和维护重要的应用程序时，他们的需求从简单转移到全面的支持、稳定性（兼容性）和熟悉度。<strong>人们总是混淆熟悉度和简单，如果可以选择的话，他们更倾向于熟悉度而不是简单。</strong></p>
+<blockquote>
+<p>这也是我在前有 C 后有 Rust 的情况下继续跟踪并学习 C++ 新标准的原因：已经上了贼船了，没办法。</p>
+</blockquote>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>任务库 [Stroustrup 1985a,c] 是一个基于协程的库，支持事件驱动的仿真（例如随机数生成），与替代方案相比是非常高效的，甚至可以运行在很小的计算机上。例如，我在 256KB 的内存中运行了 700 个任务的仿真。任务库在 C++ 早期非常重要，是贝尔实验室和其他地方许多重要应用的基础。然而，它有点丑陋，并且不容易移植到 Sun 的 SPARC 体系结构，因此大多数 1989 年以后的实现都不支持它。2020年，协程才刚刚回归。</p>
+<blockquote>
+<p>我父在 1979 年设计 C++ 时实现了两个库：task（协程）和用宏参数化的 vector。虽然在标准化过程中删的删改的改，也足见其个人高雅的技术品味。41 年后，笨重老朽的标委会终于准入了协程……</p>
+</blockquote>
+</blockquote>
+<h1 id="2-背景：C-的-1979–2006"><a href="#2-背景：C-的-1979–2006" class="headerlink" title="2. 背景：C++ 的 1979–2006"></a>2. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/02.md">背景：C++ 的 1979–2006</a></h1><blockquote>
+<p>我的办公室就在 Dennis Ritchie 和 Brian Kernighan 走廊对面。</p>
+<blockquote>
+<p>贝尔实验室就是万神殿！后来桃李半导体天下的仙童也是出自贝尔，“软硬兼施”。一百年过去了，我们的贝尔在哪里？</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>最初我实现的是一个预处理器，它将“带类的 C” 差不多逐行翻译成 C。1982 年，在“带类的 C”的用户数量增长到了几十人的时候，这种方法已经显得无法把控了。所以我写了一个传统的编译器，叫作 Cfront，1983 年 10 月第一次给别人使用。</p>
+<blockquote>
+<p>原来我父也挺会“对付”的，用语法糖验证了 C++ 的技术可行性和市场接受度后才开始考虑专属编译器的问题。嘿嘿，学到了。<br>1979.4 月开始，4 年半后才实现了第一个编译器。基础设施的建设实属不易啊。向流浪地球致敬，在现在这种浮躁的环境下迈出了扎实的一步。游戏科学加油啊……</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>直到今天，我仍然认为构造函数和析构函数是 C++ 的真正核心。</p>
+</blockquote>
+<blockquote>
+<p>不要陷入对完美的徒劳追求。</p>
+<blockquote>
+<p>不管是业务开发、架构设计，同样适用。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>应取消预处理器的使用。</p>
+<blockquote>
+<p>我父有点飘了……虽然后来的模版取代了一部分宏的能力，但是因为一直没有静态反射机制，# 和 ## 依然是逆天的存在。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>不要给 C++ 以下的低级语言留有余地（汇编语言除外）。</p>
+<blockquote>
+<p>嘿嘿嘿，我父前边才说完“过于狭隘的 C 和 C++ 爱好者之间偶尔会恶语相向”，你这条设计规则才是祸根吧……</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>1984 年：运算符和函数重载——除了算法和逻辑运算符外，还包括：允许用户定义 <code>=</code>（赋值）、<code>()</code>（调用；支持函数对象）、<code>[]</code>（下标访问）和 <code>-&gt;</code>（智能指针）。</p>
+<blockquote>
+<p>前些天面了一小伙，居然函数对象的概念都没听过。我连换仿函数、functor 几个叫法，生怕是因为翻译问题。父啊，你的伟作现在就这样被人糟蹋呢……</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我从未使用过“C++ 是一种面向对象的编程语言”这种说法，这件事很多人并不知道，或者因为感到有些尴尬而有意忽略了。那时候，我的标准描述是 C++ 是一门偏向系统编程的通用编程语言，它是</p>
+<ul>
+<li>更好的 C</li>
+<li>支持数据抽象</li>
+<li>支持面向对象编程</li>
+<li>支持泛型编程</li>
+</ul>
+<p>这个说法过去和现在都是准确的，但不如“万物皆对象”这样的口号令人兴奋！</p>
+<blockquote>
+<p>“视 C++ 为一个语言联邦”。OOP 或 TMP，没有高低之分。 </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>经过了惯例性的、大约十年的工作，该委员会终于发布了第一个标准：C++98。我和许多其他人自然更愿意更快地输出一个标准，但是委员会规则、过度的雄心和各种各样的延迟使我们在时间表方面与 Fortran、C 和其他正式标准化的语言站在了同一起跑线上。</p>
+<blockquote>
+<p>1989.12 月 ANSI C++ 标委会就已经成立，十年的时间啊，你们在搞什么？</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>dynamic_cast 是一个运行期操作，依赖于存储在 Shape 的虚拟函数表中的数据。它通用、易用，并且与其他语言类似的功能一样高效。然而，dynamic_cast 变得非常不受欢迎，因为它的实现往往是复杂的，特殊情况下手动编码可能更高效（可以说这导致 dynamic_cast 违反了零开销原则）。</p>
+<blockquote>
+<p>是的。有层次的、设计良好的架构中，两个具体的实现子类往往是精确的一对一关系，这种良好的设计保证了在最上层的实现类中执行静态类型转换总是安全的，不需要运行时检查。</p>
+</blockquote>
+</blockquote>
+<h1 id="3-C-标准委员会"><a href="#3-C-标准委员会" class="headerlink" title="3. C++ 标准委员会"></a>3. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/03.md">C++ 标准委员会</a></h1><blockquote>
+<p>SG4 网络，目前处于休眠状态，因为其结果正在等待被合并到标准中。</p>
+<blockquote>
+<p>三年又三年……到现在都还没有 executor 被批准进入 C++23 的消息，networking 那就更无望了。<br>结合 C++11 之后两个补丁版本的更新内容看，2026 年能上线 networking 就不错了。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>网络（15 年，仍在进行中）</p>
+<blockquote>
+<p>15年，错过了 web2.0，错过了移动互联，错过了异步模型……</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我注意到，2018 年秋天的会前邮件（新论文汇总）的字数是莎士比亚全集的三倍。</p>
+<blockquote>
+<p>我之前抨击过，无端造出许多没有任何表征的讳莫高深的概念，然后又用大幅文字去定义、解释。最近几年，JavaScript 近乎以一年一版本的频率大幅更新；Python 也仅用了 10 年左右时间完成了 Python2 到 Python3 的完全过渡，甚至将 Python3 迭代到了 Python3.10。我也真纳闷，标委会的老爷们你们是怎么沉得住气的？！</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我从温斯顿·丘吉尔的格言中得到些许安慰，“民主是最糟糕的政府形式，除了所有那些人类一再尝试过的其他形式”。</p>
+<blockquote>
+<p>悔之晚矣……</p>
+</blockquote>
+</blockquote>
+<h1 id="4-C-11：感觉像是门新语言"><a href="#4-C-11：感觉像是门新语言" class="headerlink" title="4. C++11：感觉像是门新语言"></a>4. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/04.md">C++11：感觉像是门新语言</a></h1><blockquote>
+<p>直到 2018 年，我仍能看到 C++98 前的编译器被用于教学。我认为这是对学生的虐待，剥夺了他们接触学习我们 20 多年的进展的机会。</p>
+<blockquote>
+<p>我的面试经历则给了我不同的感受：应届生们对 C++11 后的新标准的掌握程度普遍好于已工作多年的程序员。这算不算是一种自虐？</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>即使有了 C++11 的支持，我仍然认为无锁编程是专家级的工作。</p>
+<blockquote>
+<p>我至今没有、可预见的未来也不会了解的几个 C++ 知识点之一。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我曾希望这会产生一个由线程池支持的工作窃取（work-stealing）的实现，但我还是失望了。</p>
+<blockquote>
+<p>我父有些过分的仁慈、民主了。这么一个被普遍应用的技术方案，最后还是跟随了标委会的意愿。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我早在 1982/83 年冬天就实现了 auto，但是后来为了保持 C 兼容性而不得不移除了这一特性。</p>
+<blockquote>
+<p>我父太难了…………既要对标委会妥协，又要为了市场份额不得不跟 C 保持双向兼容。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>直到后来（大约从 2015 年开始），constexpr 函数才成为元编程的主要支柱。C++14 允许在 constexpr 函数中使用局部变量，从而支持了循环；在此之前，它们必须是纯函数式的。C++20（最终，在首次提出后约 10 年）允许将字面类型用作值模板参数类型 [Maurer 2012]。因此，C++20 将非常接近最初的目标（1979 年），即在可以使用内建类型的地方也都可以使用用户定义的类型。</p>
+</blockquote>
+<blockquote>
+<p>关于 constexpr 的讨论是有史以来最激烈、最不愉快的。</p>
+</blockquote>
+<blockquote>
+<p>lambda 表达式的实现基本上是编译器构建一个合适的函数对象并传递它。</p>
+</blockquote>
+<blockquote>
+<p>变参模板的缺点是容易导致代码膨胀，因为 N 个参数意味着模板的 N 次实例化。</p>
+</blockquote>
+<blockquote>
+<p>有些实现技巧实属“黑魔法”，不应当暴露给非专家。大部分程序员可以愉快地编写多年好的 C++ 代码，而不用了解这些复杂手段和神秘技巧。遗憾的是，初学者们一拥而上去研究这些最可怕的特殊代码，并从给别人（经常是错误地）解释它们的过程中得到巨大的自豪感。博主和演讲者们通过显摆令人提心吊胆的例子抬高他们的名望。这是 C++ 语言复杂性名声的一个主要来源。</p>
+<blockquote>
+<p>面试没必要太刁。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>random 库提供了分布函数和随机数产生器，其复杂性被誉为“每个随机数库都想长成的样子”。但它对初学者或者一般用户（常需要随机数）并不易用。（此处省略原文……）</p>
+<p>相比之下，Howard Hinnant 的 chrono 库 [Hinnant et al. 2008] 处理时间点和时间间隔，在提供复杂功能的同时仍保持了易用性。</p>
+<blockquote>
+<p>是的！两个库都用过，体验天差地别。</p>
+</blockquote>
+</blockquote>
+<h1 id="5-C-14：完成-C-11"><a href="#5-C-14：完成-C-11" class="headerlink" title="5. C++14：完成 C++11"></a>5. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/05.md">C++14：完成 C++11</a></h1><blockquote>
+<p>5.1 数字分隔符</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a = <span class="number">1&#x27;234&#x27;567</span>;    <span class="comment">// 1234567（整数）</span></span><br><span class="line"><span class="keyword">auto</span> b = <span class="number">1&#x27;234&#x27;567</span>s;   <span class="comment">// 1234567 秒</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>5.2 变量模板</p>
+<p>2012 年，Gabriel Dos Reis 提议扩展模板机制，在模板类、函数和别名 [Dos Reis 2012] 之外加入模板变量。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">constexpr</span> T pi = <span class="built_in">T</span>(<span class="number">3.1415926535897932385</span>);</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>5.3 函数返回类型推导</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">size</span><span class="params">(<span class="keyword">const</span> T&amp; a)</span> </span>&#123; <span class="keyword">return</span> a.<span class="built_in">size</span>(); &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>5.4 泛型 lambda 表达式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> get_size = [](<span class="keyword">auto</span>&amp; m)&#123; <span class="keyword">return</span> m.<span class="built_in">size</span>(); &#125;;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>5.5 constexpr 函数中的局部变量</p>
+<p>允许使用局部变量和 for 循环。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">constexpr</span> <span class="keyword">int</span> <span class="title">min</span><span class="params">(std::initializer_list&lt;<span class="keyword">int</span>&gt; xs)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> low = std::numeric_limits&lt;<span class="keyword">int</span>&gt;::<span class="built_in">max</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> x : xs)</span><br><span class="line">    <span class="keyword">if</span> (x &lt; low)</span><br><span class="line">    low = x;</span><br><span class="line">  <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> m = <span class="built_in">min</span>(&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>&#125;);</span><br></pre></td></tr></table></figure></blockquote>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=61358e3ac93b3300122c7686&amp;product=sop" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/HOPL4%E7%AC%94%E8%AE%B06.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">HOPL4 笔记 6</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Webpack%E6%89%93%E5%8C%85React%E7%BB%84%E4%BB%B6.html"><span class="level-item">Webpack 打包 React 组件</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "I8KNPnIk0nHNlTkcrT4fGQue-gzGzoHsz",
+            appKey: "GWGNIR9mBnz5E0K3MWYzK34R",
+            
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/logo.png" alt="Liang Zuoting"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Liang Zuoting</p><p class="is-size-6 is-block">新生代农民工</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>广州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">73</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">19</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">25</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/liangzuoting" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">33</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/"><span class="level-start"><span class="level-item">C++17</span></span><span class="level-end"><span class="level-item tag">27</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/"><span class="level-start"><span class="level-item">C++17详解</span></span><span class="level-end"><span class="level-item tag">25</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/C/HOPL4/"><span class="level-start"><span class="level-item">HOPL4</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/C/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/C/%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="level-start"><span class="level-item">并发计算</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/FFmpeg/"><span class="level-start"><span class="level-item">FFmpeg</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/FFmpeg-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><span class="level-start"><span class="level-item">FFmpeg 常用命令</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/MP4/"><span class="level-start"><span class="level-item">MP4</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/StreamingCore/"><span class="level-start"><span class="level-item">StreamingCore</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Unity/"><span class="level-start"><span class="level-item">Unity</span></span><span class="level-end"><span class="level-item tag">6</span></span></a><ul><li><a class="level is-mobile" href="/categories/Unity/%E4%BD%BF%E7%94%A8-Unity-%E5%BC%80%E5%8F%91-Android-VR-%E5%BA%94%E7%94%A8/"><span class="level-start"><span class="level-item">使用 Unity 开发 Android VR 应用</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/"><span class="level-start"><span class="level-item">Web</span></span><span class="level-end"><span class="level-item tag">5</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/Sanic/"><span class="level-start"><span class="level-item">Sanic</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/React/"><span class="level-start"><span class="level-item">React</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"><span class="level-start"><span class="level-item">智能家居</span></span><span class="level-end"><span class="level-item tag">10</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/SmartHome/"><span class="level-start"><span class="level-item">SmartHome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%AE%B0/"><span class="level-start"><span class="level-item">杂记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-28T02:06:21.000Z">2022-01-28</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B06.html">HOPL4 笔记 6</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-27T02:04:43.000Z">2022-01-27</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B01-5.html">HOPL4 笔记 1-5</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-17T04:45:34.000Z">2022-01-17</time></p><p class="title"><a href="/Webpack%E6%89%93%E5%8C%85React%E7%BB%84%E4%BB%B6.html">Webpack 打包 React 组件</a></p><p class="categories"><a href="/categories/Web/">Web</a> / <a href="/categories/Web/React/">React</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-10T05:10:16.000Z">2022-01-10</time></p><p class="title"><a href="/Videojs%E5%85%A8%E5%B1%8F%E6%97%B6%E6%98%BE%E7%A4%BA%E5%BC%B9%E5%B9%95%E5%92%8C%E5%8F%91%E9%80%81%E6%A1%86.html">Videojs 全屏时显示弹幕和发送框</a></p><p class="categories"><a href="/categories/Web/">Web</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-12-28T04:56:45.000Z">2021-12-28</time></p><p class="title"><a href="/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E6%96%BD%E7%8A%B6%E5%86%B5%E6%B1%87%E6%80%BB.html">智能家居实施状况汇总</a></p><p class="categories"><a href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/">智能家居</a> / <a href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/SmartHome/">SmartHome</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">一月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">十二月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">十一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">十月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">九月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/06/"><span class="level-start"><span class="level-item">六月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">五月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">四月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/02/"><span class="level-start"><span class="level-item">二月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/01/"><span class="level-start"><span class="level-item">一月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">九月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">八月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/12/"><span class="level-start"><span class="level-item">十二月 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AVX2/"><span class="tag">AVX2</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Animator/"><span class="tag">Animator</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">28</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-17/"><span class="tag">C++17</span><span class="tag">27</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DeepSpeech/"><span class="tag">DeepSpeech</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FFmpeg/"><span class="tag">FFmpeg</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jellyfin/"><span class="tag">Jellyfin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MP4/"><span class="tag">MP4</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NAS/"><span class="tag">NAS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NEON/"><span class="tag">NEON</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Sanic/"><span class="tag">Sanic</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Spectre/"><span class="tag">Spectre</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VR/"><span class="tag">VR</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Video-js/"><span class="tag">Video.js</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VideoPlayer/"><span class="tag">VideoPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Webpack/"><span class="tag">Webpack</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/XOPlayer/"><span class="tag">XOPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mono/"><span class="tag">mono</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E8%A1%8C-%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="tag">并行/并发计算</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%88%AC%E8%99%AB/"><span class="tag">爬虫</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%A5%BF%E5%AE%89/"><span class="tag">西安</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a><p class="is-size-7"><span>&copy; 2022 Liang Zuoting</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
