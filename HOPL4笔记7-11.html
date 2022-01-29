@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, FFmpeg, 智能家居, Python, 全栈"><title>HOPL4 笔记 7—11 - 学海扁舟</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="学海扁舟"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="学海扁舟"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  7. 错误处理 使用包含 (值,错误码) 对的类会带来巨大的成本。除了检测错误码的成本外，许多 ABI（应用程序二进制接口）甚至不使用寄存器来"><meta property="og:type" content="blog"><meta property="og:title" content="HOPL4 笔记 7—11"><meta property="og:url" content="https://ermao.live/HOPL4%E7%AC%94%E8%AE%B07-11.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  7. 错误处理 使用包含 (值,错误码) 对的类会带来巨大的成本。除了检测错误码的成本外，许多 ABI（应用程序二进制接口）甚至不使用寄存器来"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2022-01-29T01:39:20.000Z"><meta property="article:modified_time" content="2022-01-29T14:22:23.844Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/HOPL4%E7%AC%94%E8%AE%B07-11.html"},"headline":"HOPL4 笔记 7—11","image":["https://ermao.live/img/og_image.png"],"datePublished":"2022-01-29T01:39:20.000Z","dateModified":"2022-01-29T14:22:23.844Z","author":{"@type":"Person","name":"Liang Zuoting"},"publisher":{"@type":"Organization","name":"学海扁舟","logo":{"@type":"ImageObject","url":"https://ermao.live/img/logo.png"}},"description":"HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。这是我父的第三篇 HOPL 论文，发表于 2021 年。中文译本 出自 Boolan 之手，不胜感激。  7. 错误处理 使用包含 (值,错误码) 对的类会带来巨大的成本。除了检测错误码的成本外，许多 ABI（应用程序二进制接口）甚至不使用寄存器来"}</script><link rel="canonical" href="https://ermao.live/HOPL4%E7%AC%94%E8%AE%B07-11.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600&amp;family=Roboto+Mono"><link rel="stylesheet" href="/css/cyberpunk.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Welcome To My GitHub" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-01-29T01:39:20.000Z" title="2022-1-29 9:39:20">2022-01-29</time>发表</span><span class="level-item"><time dateTime="2022-01-29T14:22:23.844Z" title="2022-1-29 22:22:23">2022-01-29</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a><span> / </span><a class="link-muted" href="/categories/C/HOPL4/">HOPL4</a></span><span class="level-item">25 分钟读完 (大约3710个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">HOPL4 笔记 7—11</h1><div class="content"><blockquote>
+<p>HOPL 是 History of Programming Languages（编程语言历史）的缩写，是 ACM 旗下的一个会议，约每十五年举办一次。<br>这是我父的第三篇 HOPL 论文，发表于 2021 年。<a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh">中文译本</a> 出自 <a target="_blank" rel="noopener" href="http://boolan.com/">Boolan</a> 之手，不胜感激。</p>
+</blockquote>
+<h1 id="7-错误处理"><a href="#7-错误处理" class="headerlink" title="7. 错误处理"></a>7. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/07.md">错误处理</a></h1><blockquote>
+<p>使用包含 (值,错误码) 对的类会带来巨大的成本。除了检测错误码的成本外，许多 ABI（应用程序二进制接口）甚至不使用寄存器来传递小的结构体，所以 (值,错误码) 对不仅传递了更多的信息（是通常数量的两倍），而且也使传递的性能有数量级的降低。可悲的是，在许多 ABI 中，尤其那些针对嵌入式系统的 ABI（专为 C 代码设计），这个问题直到今天（2020 年）依然存在。</p>
+</blockquote>
+<blockquote>
+<p>这些年来，异常处理的性能相对较慢，是因为我们在优化非异常方面花费了大量精力。</p>
+</blockquote>
+<blockquote>
+<p>具有讽刺意味的是，那些坚定支持异常规约的人转而去帮助设计 Java 了。</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>一些人相信那些关于异常机制的基于最坏情况和/或不切实际的比较的低效传闻，例如…………，或者<strong>使用异常来做简单的错误处理</strong>，而不是把异常用于无法在本地处理的错误。</p>
+</blockquote>
+<blockquote>
+<p>基础库的作者对多种错误处理方案的问题感受最为深刻。他们不知道他们的用户喜欢什么，他们的用户可能有很多不同的偏好。C++17 文件系统库的作者们选择了把接口重复一遍：对于每个操作，他们提供两个函数，一个在错误的情况下抛出异常，另一个函数则通过设置标准库的 error_code 参数将错误码通过参数传递出来</p>
+</blockquote>
+<blockquote>
+<p>在异常抛出与其处理程序之间的路径上的 noexcept，会把一个异常变成程序终止运行。</p>
+</blockquote>
+<blockquote>
+<p>异常被添加到 C++ 中的一个重要原因是为了<strong>支持那些在发生错误时也决不可以无条件中止的应用</strong>。异常仅表示发生了故障，并且从 main() 到抛出点的路径上的任何代码都可以对其进行处理。</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>我父基本把异常的<strong>不适用</strong>场景总结出来了：简单的错误处理、严重到可以无条件中止应用的错误发生时。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>从根本上讲，我认为 C++ 需要两种错误处理机制：</p>
+<ul>
+<li><strong>异常</strong>——罕见的错误或直接调用者无法处理的错误。</li>
+<li><strong>错误码</strong>——错误码表示可以由直接调用者处理的错误（通常隐藏在易于使用的检测操作中或作为 (值,错误码) 对从函数返回）。 </li>
+</ul>
+</blockquote>
+<blockquote>
+<p>在理想情况下，应该只有两种错误处理的方法，但是我真的不知道如何达到这样一种理想状态。</p>
+</blockquote>
+<blockquote>
+<p>我要问一个简单而潜在有用的问题：“一个错误要多罕见才被看作是异常情况”？不幸的是，答案是“这要看情况”。这取决于代码、硬件、优化器、异常处理的实现，等等等等。</p>
+</blockquote>
+<blockquote>
+<p>空间占用问题可能比运行期问题更难解决。</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>错误码 or 异常，我父也没办法给出准确选择标准的一个问题。只能以简单、罕见、看情况这些宽泛定义的词汇做一个宏观上的总结。所以 Google 编码规范中一刀切地禁止使用异常就可以理解了。</p>
+</blockquote>
+</blockquote>
+<h1 id="8-C-17：大海迷航"><a href="#8-C-17：大海迷航" class="headerlink" title="8. C++17：大海迷航"></a>8. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/08.md">C++17：大海迷航</a></h1><blockquote>
+<p>C++17 有很多新的特性，但没有一个我认为称得上重大。</p>
+<blockquote>
+<p>而我却学得很嗨。我父的理由是：“尽管我也喜欢 C++17 中的某些功能，但令人困扰的是这些功能没有统一的主题，没有整体的规划，似乎只是由于可以达到投票多数而被扔进语言和标准库中的一组“聪明的想法””。这就是架构师跟程序员的区别吧？</p>
+</blockquote>
+</blockquote>
+<h2 id="8-1-构造函数模板参数推导"><a href="#8-1-构造函数模板参数推导" class="headerlink" title="8.1 构造函数模板参数推导"></a>8.1 构造函数模板参数推导</h2><blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shared_lock lck &#123;m&#125;;    <span class="comment">// 不需要显式写出锁类型</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="8-2-结构化绑定"><a href="#8-2-结构化绑定" class="headerlink" title="8.2 结构化绑定"></a>8.2 结构化绑定</h2><blockquote>
+<p>我认为在当前的 C++ 中，<code>tuple</code> 有点被过度使用了，<strong>当多个值并不互相独立的时候，我倾向于使用明确定义的类型</strong></p>
+<blockquote>
+<p>我会 <code>using MyType = tuple&lt;int, string, others...&gt;</code> 这样折中一下。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我指出结构化绑定应该引入零开销别名，而任何意味着表示变化的类型转换将导致显著的开销。</p>
+<blockquote>
+<p>是的，对任何可能的（不是全部，比如数组）绑定，都是通过 using 别名实现的，真正的零开销！</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>最初的提案使用花括号（<code>&#123;&#125;</code>）来聚合引入的名字…………然而一些成员，如 Chandler Carruth 和 David Vandevoorde，怕语法上会有歧义，而坚持认为这样会令人困惑，“因为 {} 代表作用域”。所以我们有了 <code>[]</code> 语法…………</p>
+<p>这是个小改动，但我认为是个错误。这个最后一刻的改动，导致了属性表达语法的小小复杂化（比如 <code>[[fallthrough]]</code>）。</p>
+<blockquote>
+<p>这明显站不住脚嘛，统一初始化不就已经拓展了 {} 的用法。</p>
+</blockquote>
+</blockquote>
+<h2 id="8-3-variant、optional-和-any"><a href="#8-3-variant、optional-和-any" class="headerlink" title="8.3 variant、optional 和 any"></a>8.3 variant、optional 和 any</h2><blockquote>
+<p>不幸的是，这三种类型的设计被分开讨论，好像它们的使用情况毫不相干一样。相对于标准库而言，直接语言支持的可能性似乎从未被认真考虑。</p>
+<blockquote>
+<p>导致的结果就是：</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">optional&lt;<span class="keyword">int</span>&gt; var1 = <span class="number">7</span>;</span><br><span class="line">variant&lt;<span class="keyword">int</span>,string&gt; var2 = <span class="number">7</span>;</span><br><span class="line">any var3 = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> x1 = *var1 ;               <span class="comment">// 对 optional 解引用</span></span><br><span class="line"><span class="keyword">auto</span> x2 = get&lt;<span class="keyword">int</span>&gt;(var2);       <span class="comment">// 像访问 tuple 一样访问 variant</span></span><br><span class="line"><span class="keyword">auto</span> x3 = any_cast&lt;<span class="keyword">int</span>&gt;(var3);  <span class="comment">// 转换 any</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>三种截然不同的取值方式……</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>我认为这三种可辨识 union 的变体只是权宜之计。要解决 union 的问题，函数式编程风格的模式匹配更优雅、通用，潜在也更为高效。…………我们的目的是消除对访问者模式的使用 [Gamma et al. 1994]。</p>
+</blockquote>
+<h2 id="8-4-并发"><a href="#8-4-并发" class="headerlink" title="8.4 并发"></a>8.4 并发</h2><blockquote>
+<ul>
+<li>scoped_lock——获取任意数量的锁，而不会造成死锁</li>
+<li>shared_mutex 和 shared_lock——实现读写锁</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>有时，我同很多 C++ 程序员一样在想，“是什么让他们花了这么长时间？”</p>
+<blockquote>
+<p>他们——标委会的老爷们。</p>
+</blockquote>
+</blockquote>
+<h2 id="8-5-并行-STL"><a href="#8-5-并行-STL" class="headerlink" title="8.5 并行 STL"></a>8.5 并行 STL</h2><blockquote>
+<p>不出意外，委员会中有一些反对的声音，大多数来自于希望为专家级用户提供复杂接口的人。</p>
+<blockquote>
+<p>我十分怀疑这些人都是别的语言阵营派来的奸细。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>将来我们会看到专门为并行使用而设计的算法。这正在 C++20 中变为现实。</p>
+</blockquote>
+<blockquote>
+<p>另一个弱点是，仍然没有取消一个线程的标准方法。例如，<strong>在搜索中找到一个对象后，一个线程不能停止其他正在并行执行的搜索。</strong></p>
+</blockquote>
+<blockquote>
+<p>C++17 的并行算法也支持向量化。这很重要，因为对 SIMD 的优化支持是硬件在单线程性能方面仍然（2017 年后）有巨大增长的少数领域之一。</p>
+</blockquote>
+<h3 id="8-8-3-统一调用语法"><a href="#8-8-3-统一调用语法" class="headerlink" title="8.8.3 统一调用语法"></a>8.8.3 统一调用语法</h3><blockquote>
+<p>回头看，我认为面向对象的写法（如 <code>x.f(y)</code>）压根就不该被引入。传统的数学式写法 <code>f(x,y)</code> 就足够了。</p>
+<blockquote>
+<p>坏了……要转向函数范式了？</p>
+</blockquote>
+</blockquote>
+<h1 id="9-C-20：方向之争"><a href="#9-C-20：方向之争" class="headerlink" title="9. C++20：方向之争"></a>9. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/09.md">C++20：方向之争</a></h1><blockquote>
+<p>令人震惊的是，C++ 并没有关于动态链接库的标准，也没有标准化的构建系统。</p>
+<blockquote>
+<p>这绝对是阻碍 C++ 生态发展的一个重要阻力。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>await 设计无栈、不对称且需要语言支持，而源自 Boost 的设计则使用栈、具有对称控制原语且基于库。无栈协程只能在其自身函数体中挂起，而不能从其调用的函数中挂起。这样，挂起仅涉及保存单个栈帧（“协程状态”），而不是保存整个栈。对于性能而言，这是一个巨大的优势。</p>
+</blockquote>
+<blockquote>
+<p>我已经等了近 30 年的时间让协程重新回到 C++ 中，我可不想等待一个可能永远不会到来的突破：“最好是好的敌人。”</p>
+</blockquote>
+<blockquote>
+<p><strong>C++ 程序员必须学会限制编译期计算和元编程的使用，只有在值得为了代码紧凑性和运行期性能而引入它们的地方才使用。</strong></p>
+</blockquote>
+<blockquote>
+<p>像在 Unix 中一样，管道运算符 | 将其左操作数的输出作为输入传递到其右操作数（例如 A|B 表示 B(A)）。</p>
+</blockquote>
+<blockquote>
+<p>越界访问，有时也称为缓冲区溢出，从 C 的时代以来就一直是一个严重的问题。</p>
+</blockquote>
+<blockquote>
+<p>1990 年，Dennis Ritchie 向 C 标准委员会提议：“‘胖指针’，它的表示中包括了内存空间以存放运行期可调整的边界。”[Ritchie 1990]。由于各种原因，C 标准委员会没有通过这个提案。在当时，我听到一条极可笑的评论：“Dennis 不是 C 的专家；他从不来参加会议。</p>
+<blockquote>
+<p>哈哈哈……想起了 G 神“I Wrote Python”的段子。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>无符号数并不以自然数为模型：无符号数使用模算数，包括减法。比如，如果 ch 是个 unsigned char，ch+100 将永远不会溢出。</p>
+</blockquote>
+<blockquote>
+<p>我担心的是晦涩难懂的新特性的数量之大会造成危害 [Stroustrup 2018d]。对于非专家来说，它们使得语言变得更加难以学习，代码更加难以理解。</p>
+<blockquote>
+<p>是的……增量学习新标准里的种种语言特性和库特性已经是挑战了，对需要从头学习的新手来说无疑是难上加难。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>很多特性具有特殊用途，有些是“专家专用”。不过，有的人总是领会不到，一个对某些人有某种好处的特性，对于 C++ 整体可能是个净负债。</p>
+</blockquote>
+<blockquote>
+<p>多年来，Bloomberg（那家纽约市的金融信息公司）一直使用一个名为“契约”的实时断言系统去捕获代码中的问题。</p>
+<blockquote>
+<p>新闻界有名的彭博社还是个“技术控”。他们的开源 C++ 库 BDE 被收录在了 <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/links/libs">cppreference</a> ，我父提到的契约（Contract）就包含其中。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>2013 年，一个研究“反射”的研究组（SG7）成立了，…………类似这样的东西很可能会在 C++23 或 C++26 中成为标准。</p>
+<blockquote>
+<p>怪不得我父前文说要彻底消灭预编译宏呢。</p>
+</blockquote>
+</blockquote>
+<h1 id="10-2020-年的-C"><a href="#10-2020-年的-C" class="headerlink" title="10. 2020 年的 C++"></a>10. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/10.md">2020 年的 C++</a></h1><blockquote>
+<p>所有迹象表明，自 2015 年以来，C++ 的用户数量和使用领域一直在稳步增长。</p>
+<blockquote>
+<p>多亏了 C++11，及时挽回了 C++ 的颓势。这点我父在前文也提到了。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>与大多数编程语言社区相比，C++ 社区一向是出奇地无组织和分散。这个问题早已有之，因为我就没有建立组织的才能。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>isocpp.org</strong>——C++ 基金会的网站，其中包含与 C++ 有关的新闻，标准化进程相关的信息，以及有用的链接。</li>
+<li><strong>cppreference.com</strong>——出色的在线参考资料；它甚至有一个历史部分！</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>好的软件对我们的文明至关重要。</p>
+</blockquote>
+<blockquote>
+<p>Qt 依赖于元对象协议（meta-object protocol，缩写为 MOP），因此 Qt 程序还不是标准的 ISO C++ 应用。静态反射使我们最终能够解决这个问题。</p>
+</blockquote>
+<blockquote>
+<p>C++ 支持多种编程风格（如您坚持，也可以称为“范式”），其背后的想法并不是要让我们选择一种最喜欢的样式进行编程，而是可以将多种风格组合使用，以表达比单一风格更好的解决方案。</p>
+</blockquote>
+<blockquote>
+<p>当我们需要一个值时，函数是最佳的计算方式，即使——尤其——在编译期。传统<strong>模板</strong>元编程最好只保留用于计算新的类型和控制结构。</p>
+</blockquote>
+<h1 id="11-回顾"><a href="#11-回顾" class="headerlink" title="11. 回顾"></a>11. <a target="_blank" rel="noopener" href="https://github.com/Cpp-Club/Cxx_HOPL4_zh/blob/main/11.md">回顾</a></h1><blockquote>
+<p>没有一种语言对所有人和所有事都是完美的。对于这点，没有人比既懂多种语言、又严肃使用其中一种并努力支持它的人了解更多了。</p>
+</blockquote>
+<blockquote>
+<p>C++ 苦于诞生过早，在现代化的集成开发环境（IDE）、构建系统、图形界面（GUI）系统和 Unicode 问世之前就已经诞生了。</p>
+<blockquote>
+<p>异步的流行、并发/分布式的流行、web 的流行……都应该是推动 C++ 急速进化的主要应用领域，全都错过了。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>C++ 社区还缺少一个标准的地方来寻找有用的库。</p>
+</blockquote>
+<blockquote>
+<p><strong>字符集和图形</strong>：C++ 语言和标准库依赖于 ASCII，但大多数应用程序使用某种形式的 Unicode。</p>
+<blockquote>
+<p>字符编码上的混乱真的是劝退级的！</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>C++ 标准委员会的章程几乎只关注语言和库的设计。这是有局限性的。一直以来，像动态链接、构建系统和静态分析之类的重要主题大多被忽略了。这是个错误。工具是软件开发人员世界的一个重要组成部分，要是能不把它们置于语言设计的外围就好了。</p>
+<blockquote>
+<p>生态！生态！还是生态！</p>
+</blockquote>
+</blockquote>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=61358e3ac93b3300122c7686&amp;product=sop" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/HOPL4%E7%AC%94%E8%AE%B06.html"><span class="level-item">HOPL4 笔记 6</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "I8KNPnIk0nHNlTkcrT4fGQue-gzGzoHsz",
+            appKey: "GWGNIR9mBnz5E0K3MWYzK34R",
+            
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/logo.png" alt="Liang Zuoting"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Liang Zuoting</p><p class="is-size-6 is-block">新生代农民工</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>广州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">74</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">19</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">25</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/liangzuoting" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">34</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/"><span class="level-start"><span class="level-item">C++17</span></span><span class="level-end"><span class="level-item tag">27</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/"><span class="level-start"><span class="level-item">C++17详解</span></span><span class="level-end"><span class="level-item tag">25</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/C/HOPL4/"><span class="level-start"><span class="level-item">HOPL4</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/C/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/C/%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="level-start"><span class="level-item">并发计算</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/FFmpeg/"><span class="level-start"><span class="level-item">FFmpeg</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/FFmpeg-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><span class="level-start"><span class="level-item">FFmpeg 常用命令</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/MP4/"><span class="level-start"><span class="level-item">MP4</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/StreamingCore/"><span class="level-start"><span class="level-item">StreamingCore</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Unity/"><span class="level-start"><span class="level-item">Unity</span></span><span class="level-end"><span class="level-item tag">6</span></span></a><ul><li><a class="level is-mobile" href="/categories/Unity/%E4%BD%BF%E7%94%A8-Unity-%E5%BC%80%E5%8F%91-Android-VR-%E5%BA%94%E7%94%A8/"><span class="level-start"><span class="level-item">使用 Unity 开发 Android VR 应用</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/"><span class="level-start"><span class="level-item">Web</span></span><span class="level-end"><span class="level-item tag">5</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/Sanic/"><span class="level-start"><span class="level-item">Sanic</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/React/"><span class="level-start"><span class="level-item">React</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"><span class="level-start"><span class="level-item">智能家居</span></span><span class="level-end"><span class="level-item tag">10</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/SmartHome/"><span class="level-start"><span class="level-item">SmartHome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%AE%B0/"><span class="level-start"><span class="level-item">杂记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-29T01:39:20.000Z">2022-01-29</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B07-11.html">HOPL4 笔记 7—11</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-28T02:06:21.000Z">2022-01-28</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B06.html">HOPL4 笔记 6</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-27T02:04:43.000Z">2022-01-27</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B01-5.html">HOPL4 笔记 1-5</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-17T04:45:34.000Z">2022-01-17</time></p><p class="title"><a href="/Webpack%E6%89%93%E5%8C%85React%E7%BB%84%E4%BB%B6.html">Webpack 打包 React 组件</a></p><p class="categories"><a href="/categories/Web/">Web</a> / <a href="/categories/Web/React/">React</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-10T05:10:16.000Z">2022-01-10</time></p><p class="title"><a href="/Videojs%E5%85%A8%E5%B1%8F%E6%97%B6%E6%98%BE%E7%A4%BA%E5%BC%B9%E5%B9%95%E5%92%8C%E5%8F%91%E9%80%81%E6%A1%86.html">Videojs 全屏时显示弹幕和发送框</a></p><p class="categories"><a href="/categories/Web/">Web</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">一月 2022</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">十二月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">十一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">十月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">九月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/06/"><span class="level-start"><span class="level-item">六月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">五月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">四月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/02/"><span class="level-start"><span class="level-item">二月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/01/"><span class="level-start"><span class="level-item">一月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">九月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">八月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/12/"><span class="level-start"><span class="level-item">十二月 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AVX2/"><span class="tag">AVX2</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Animator/"><span class="tag">Animator</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">29</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-17/"><span class="tag">C++17</span><span class="tag">27</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DeepSpeech/"><span class="tag">DeepSpeech</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FFmpeg/"><span class="tag">FFmpeg</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jellyfin/"><span class="tag">Jellyfin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MP4/"><span class="tag">MP4</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NAS/"><span class="tag">NAS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NEON/"><span class="tag">NEON</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Sanic/"><span class="tag">Sanic</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Spectre/"><span class="tag">Spectre</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VR/"><span class="tag">VR</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Video-js/"><span class="tag">Video.js</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VideoPlayer/"><span class="tag">VideoPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Webpack/"><span class="tag">Webpack</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/XOPlayer/"><span class="tag">XOPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mono/"><span class="tag">mono</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E8%A1%8C-%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="tag">并行/并发计算</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%88%AC%E8%99%AB/"><span class="tag">爬虫</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%A5%BF%E5%AE%89/"><span class="tag">西安</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a><p class="is-size-7"><span>&copy; 2022 Liang Zuoting</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
