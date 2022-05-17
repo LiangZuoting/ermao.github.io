@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="React, React教程"><title>React 笔记—高级指引 - 学海扁舟</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="学海扁舟"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="学海扁舟"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文基于官方 v18.1.0 文档。  Code-SplittingCode Splitting You need to keep an eye on the code you are including in your bundle so that you don’t accidentally make it so large that your app takes a long time t"><meta property="og:type" content="blog"><meta property="og:title" content="React 笔记—高级指引"><meta property="og:url" content="https://ermao.live/React%E7%AC%94%E8%AE%B0%E2%80%94%E9%AB%98%E7%BA%A7%E6%8C%87%E5%BC%95.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="本文基于官方 v18.1.0 文档。  Code-SplittingCode Splitting You need to keep an eye on the code you are including in your bundle so that you don’t accidentally make it so large that your app takes a long time t"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2022-05-16T12:45:41.000Z"><meta property="article:modified_time" content="2022-05-17T06:27:21.635Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="React, React教程"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/React%E7%AC%94%E8%AE%B0%E2%80%94%E9%AB%98%E7%BA%A7%E6%8C%87%E5%BC%95.html"},"headline":"React 笔记—高级指引","image":["https://ermao.live/img/og_image.png"],"datePublished":"2022-05-16T12:45:41.000Z","dateModified":"2022-05-17T06:27:21.635Z","author":{"@type":"Person","name":"Liang Zuoting"},"publisher":{"@type":"Organization","name":"学海扁舟","logo":{"@type":"ImageObject","url":"https://ermao.live/img/logo.png"}},"description":"本文基于官方 v18.1.0 文档。  Code-SplittingCode Splitting You need to keep an eye on the code you are including in your bundle so that you don’t accidentally make it so large that your app takes a long time t"}</script><link rel="canonical" href="https://ermao.live/React%E7%AC%94%E8%AE%B0%E2%80%94%E9%AB%98%E7%BA%A7%E6%8C%87%E5%BC%95.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600&amp;family=Roboto+Mono"><link rel="stylesheet" href="/css/cyberpunk.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Welcome To My GitHub" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-05-16T12:45:41.000Z" title="2022/5/16 下午8:45:41">2022-05-16</time>发表</span><span class="level-item"><time dateTime="2022-05-17T06:27:21.635Z" title="2022/5/17 下午2:27:21">2022-05-17</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Web/">Web</a><span> / </span><a class="link-muted" href="/categories/Web/React/">React</a><span> / </span><a class="link-muted" href="/categories/Web/React/Docs/">Docs</a></span><span class="level-item">26 分钟读完 (大约3854个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">React 笔记—高级指引</h1><div class="content"><blockquote>
+<p>本文基于官方 v18.1.0 文档。</p>
+</blockquote>
+<h1 id="Code-Splitting"><a href="#Code-Splitting" class="headerlink" title="Code-Splitting"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html">Code-Splitting</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#code-splitting">Code Splitting</a></p>
+<p>You need to keep an eye on the code you are including in your bundle so that you don’t accidentally make it so large that your app takes a long time to load.</p>
+<p>Code-Splitting is a feature supported by bundlers like Webpack, Rollup and Browserify (via factor-bundle) which can create multiple bundles that can be dynamically loaded at runtime.</p>
+<p>Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app.</p>
+<span id="more"></span>
+
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#import">import()</a></p>
+<p>The best way to introduce code-splitting into your app is through the dynamic <code>import()</code> syntax.</p>
+<p>When Webpack comes across this syntax, it automatically starts code-splitting your app.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#reactlazy">React.lazy</a></p>
+<blockquote>
+<p>React 提供的一种异步动态加载机制。用 <code>React.lazy</code> 导入组件，然后在 <code>Suspense</code> 组件中使用组件。</p>
+</blockquote>
+<p>The <code>fallback</code> prop accepts any React elements that you want to render while waiting for the component to load.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#avoiding-fallbacks">Avoiding fallbacks</a></p>
+<blockquote>
+<p>介绍了 React 18 中并发特性 Transition 的一种用法，使用 <a target="_blank" rel="noopener" href="https://reactjs.org/docs/react-api.html#starttransition"><code>startTransition</code></a> 避免显示 fallback。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#route-based-code-splitting">Route-based code splitting</a></p>
+<blockquote>
+<p>一种基于路由拆分 bundle 的思路。用到了 <code>React.lazy</code> 和 <a target="_blank" rel="noopener" href="https://reactrouter.com/">React Router</a>。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/code-splitting.html#named-exports">Named Exports</a></p>
+<p><code>React.lazy</code> currently only supports default exports. If the module you want to import uses named exports, you can create an intermediate module that reexports it as the default.</p>
+<h1 id="Context"><a href="#Context" class="headerlink" title="Context"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/context.html">Context</a></h1><p><strong>Context provides a way to pass data through the component tree without having to pass props down manually at every level.</strong></p>
+<h1 id="Error-Boundaries"><a href="#Error-Boundaries" class="headerlink" title="Error Boundaries"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/error-boundaries.html">Error Boundaries</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries">Introducing Error Boundaries</a></p>
+<p>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed.</p>
+<p>Error boundaries do not catch errors for:</p>
+<ul>
+<li>Event handlers</li>
+<li>Asynchronous code (e.g. <code>setTimeout</code> or <code>requestAnimationFrame</code> callbacks)</li>
+<li>Server side rendering</li>
+<li>Errors thrown in the error boundary itself (rather than its children)</li>
+</ul>
+<p>A class component becomes an error boundary if it defines either (or both) of the lifecycle methods <code>static getDerivedStateFromError()</code> or <code>componentDidCatch()</code>. Use <code>static getDerivedStateFromError()</code> to render a fallback UI after an error has been thrown. Use <code>componentDidCatch()</code> to log error information.</p>
+<p>Only class components can be error boundaries.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/error-boundaries.html#new-behavior-for-uncaught-errors">New Behavior for Uncaught Errors</a></p>
+<p><strong>As of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.</strong></p>
+<blockquote>
+<p>React 16 起，未捕获错误会导致整个 React 组件树被卸载。</p>
+</blockquote>
+<p>…it is worse to leave corrupted UI in place than to completely remove it.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/error-boundaries.html#how-about-trycatch">How About try/catch?</a></p>
+<blockquote>
+<p><code>try</code> / <code>catch</code> 只适用于命令式代码，而基于 jsx 的 React 是声明式的。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/error-boundaries.html#how-about-event-handlers">How About Event Handlers?</a></p>
+<p>Error boundaries do not catch errors inside event handlers.</p>
+<blockquote>
+<p>错误边界仅负责 React 组件本身的错误处理，比如 render 方法、其它生命周期方法。</p>
+</blockquote>
+<h1 id="Forwarding-Refs"><a href="#Forwarding-Refs" class="headerlink" title="Forwarding Refs"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/forwarding-refs.html">Forwarding Refs</a></h1><p>Ref forwarding is a technique for automatically passing a ref through a component to one of its children.</p>
+<p>Ref forwarding is not limited to DOM components. You can forward refs to class component instances, too.</p>
+<blockquote>
+<p>大致上就是，有时候组件使用者想获取组件内层某个 DOM 元素或子组件的 ref，因为 ref is not available in props，必须使用 <code>React.forwardRef</code> 创建组件，将 ref 作为函数参数传递到组件内部。</p>
+<p>即，正常创建的组件 <code>&lt;FancyButton ref=&#123;ref&#125; /&gt;</code>，那 ref 一定是指向 <code>FancyButton</code> 的；而如果此组件是通过 <code>React.forwardRef</code> 创建，ref 就有可能指向内部元素。</p>
+<p>这似乎意义不大啊，虽然 ref 是保留字，我依然可以换用其它更有意义的 prop 名字通过普通组件达到相同的目的，比如 <code>&lt;FancyButton innerButtonRef=&#123;ref&#125; /&gt;</code>。<br>而且 ref 转发只适用于函数组件，不能用于类组件。</p>
+</blockquote>
+<blockquote>
+<p>似乎只是提供了一种可以不修改接口就可以改变行为的手段，对组件库开发者比较有用？</p>
+</blockquote>
+<h1 id="Fragments"><a href="#Fragments" class="headerlink" title="Fragments"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/fragments.html">Fragments</a></h1><p>Fragments let you group a list of children without adding extra nodes to the DOM.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/fragments.html#keyed-fragments">Keyed Fragments</a></p>
+<p>Fragments declared with the explicit <code>&lt;React.Fragment&gt;</code> syntax may have keys.</p>
+<blockquote>
+<p>短语法不能有属性。</p>
+</blockquote>
+<h1 id="Higher-Order-Components"><a href="#Higher-Order-Components" class="headerlink" title="Higher-Order Components"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html">Higher-Order Components</a></h1><p>A higher-order component is a function that takes a component and returns a new component.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#use-hocs-for-cross-cutting-concerns">Use HOCs For Cross-Cutting Concerns</a></p>
+<blockquote>
+<p>横切关注点指的是一些具有横越多个模块的行为。</p>
+</blockquote>
+<blockquote>
+<p>高阶组件用来解决多组具有同一类切面导致的重复代码的问题。可以将形成切面关系的两者通过另一个更高阶的组件封装，将横切关注点放在高阶组件内。</p>
+</blockquote>
+<p><strong>A HOC is a pure function with zero side-effects.</strong></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition"><strong>Don’t Mutate the Original Component. Use Composition.</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component">Convention: Pass Unrelated Props Through to the Wrapped Component</a></p>
+<p>HOCs add features to a component. They shouldn’t drastically alter its contract. It’s expected that the component returned from a HOC has a similar interface to the wrapped component.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/higher-order-components.html#static-methods-must-be-copied-over">Static Methods Must Be Copied Over</a></p>
+<blockquote>
+<p>在 HOC 返回前必须把 wrappedComponent 的所有静态方法复制到容器组件中，否则用户通过高阶组件调用不到这些静态方法。</p>
+</blockquote>
+<p>However, <strong>this requires you to know exactly which methods need to be copied</strong>. You can use hoist-non-react-statics to automatically copy all non-React static methods.</p>
+<h1 id="Integrating-with-Other-Libraries"><a href="#Integrating-with-Other-Libraries" class="headerlink" title="Integrating with Other Libraries"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/integrating-with-other-libraries.html">Integrating with Other Libraries</a></h1><blockquote>
+<p>以 jQuery 和 backbone.js 为例，详述了如何将 React 同其它库集成。略过没看。</p>
+</blockquote>
+<h1 id="JSX-In-Depth"><a href="#JSX-In-Depth" class="headerlink" title="JSX In Depth"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html">JSX In Depth</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#specifying-the-react-element-type">Specifying The React Element Type</a></p>
+<p>Capitalized types indicate that the JSX tag is referring to a React component.</p>
+<blockquote>
+<p>React 组件名称必须大写字母开头。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#react-must-be-in-scope">React Must Be in Scope</a></p>
+<p>Since JSX compiles into calls to <code>React.createElement</code>, the <code>React</code> library must also always be in scope from your JSX code.</p>
+<blockquote>
+<p>只要用到了 React 组件，就要 <code>import React from &#39;react&#39;;</code></p>
+</blockquote>
+<p>If you don’t use a JavaScript bundler and loaded React from a <code>&lt;script&gt;</code> tag, it is already in scope as the <code>React</code> global.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#choosing-the-type-at-runtime">Choosing the Type at Runtime</a></p>
+<p>You cannot use a general expression as the React element type. If you do want to use a general expression to indicate the type of the element, just assign it to a capitalized variable first.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#javascript-expressions-as-props">JavaScript Expressions as Props</a></p>
+<p><code>if</code> statements and <code>for</code> loops are not expressions in JavaScript, so they can’t be used in JSX directly.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#string-literals">String Literals</a></p>
+<p>When you pass a string literal, its value is HTML-unescaped.</p>
+<blockquote>
+<p>即 <code>&lt;MyComponent message=&quot;&amp;lt;3&quot; /&gt;</code> 这种会先被转义。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#props-default-to-true">Props Default to “True”</a></p>
+<p>If you pass no value for a <code>prop</code>, it defaults to true.</p>
+<p>In general, we don’t recommend not passing a value for a prop, because it can be confused with the ES6 object shorthand <code>&#123;foo&#125;</code> which is short for <code>&#123;foo: foo&#125;</code> rather than <code>&#123;foo: true&#125;</code>.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#spread-attributes">Spread Attributes</a></p>
+<p>You can also pick specific props that your component will consume while passing all other props using the spread syntax.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Button = <span class="function"><span class="params">props</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; kind, ...other &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> className = kind === <span class="string">&quot;primary&quot;</span> ? <span class="string">&quot;PrimaryButton&quot;</span> : <span class="string">&quot;SecondaryButton&quot;</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">className</span>=<span class="string">&#123;className&#125;</span> &#123;<span class="attr">...other</span>&#125; /&gt;</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>变量 <code>other</code> 的定义。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#children-in-jsx">Children in JSX</a></p>
+<p>In JSX expressions that contain both an opening tag and a closing tag, the content between those tags is passed as a special prop: <code>props.children</code>.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#functions-as-children">Functions as Children</a></p>
+<p><code>props.children</code> works just like any other prop in that it can pass any sort of data, not just the sorts that React knows how to render.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored">Booleans, Null, and Undefined Are Ignored</a></p>
+<p><code>false</code>, <code>null</code>, <code>undefined</code>, and <code>true</code> are valid children. <strong>They simply don’t render</strong>.</p>
+<h1 id="Optimizing-Performance"><a href="#Optimizing-Performance" class="headerlink" title="Optimizing Performance"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/optimizing-performance.html">Optimizing Performance</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/optimizing-performance.html#virtualize-long-lists">Virtualize Long Lists</a></p>
+<blockquote>
+<p>使用一些第三方虚拟列表库：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://react-window.now.sh/">react-window</a></li>
+<li><a target="_blank" rel="noopener" href="https://bvaughn.github.io/react-virtualized/">react-virtualized</a></li>
+</ul>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/optimizing-performance.html#avoid-reconciliation">Avoid Reconciliation</a></p>
+<p>In most cases, instead of writing <code>shouldComponentUpdate()</code> by hand, you can inherit from <code>React.PureComponent</code>. It is equivalent to implementing <code>shouldComponentUpdate()</code> with a shallow comparison of current and previous props and state.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/optimizing-performance.html#the-power-of-not-mutating-data">The Power Of Not Mutating Data</a></p>
+<blockquote>
+<p>因为 <code>React.PureComponent</code> 做的是浅比较，所以要避免修改 object 类型的 state 或 prop 的值。<br>可以通过展开操作符或 <code>object.assign</code> 等方法每次创建新对象赋值给 state / prop。</p>
+</blockquote>
+<h1 id="Portals"><a href="#Portals" class="headerlink" title="Portals"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/portals.html">Portals</a></h1><p>Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/portals.html#usage">Usage</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="comment">// React does *not* create a new div. It renders the children into `domNode`.</span></span><br><span class="line">  <span class="comment">// `domNode` is any valid DOM node, regardless of its location in the DOM.</span></span><br><span class="line">  <span class="keyword">return</span> ReactDOM.createPortal(</span><br><span class="line">    <span class="built_in">this</span>.props.children,</span><br><span class="line">    domNode</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/portals.html#event-bubbling-through-portals">Event Bubbling Through Portals</a></p>
+<p>This includes event bubbling. An event fired from inside a portal will propagate to ancestors in the containing React tree, even if those elements are not ancestors in the DOM tree.</p>
+<h1 id="Profiler-API"><a href="#Profiler-API" class="headerlink" title="Profiler API"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/profiler.html">Profiler API</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/profiler.html#onrender-callback">onRender Callback</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onRenderCallback</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  id, <span class="comment">// the &quot;id&quot; prop of the Profiler tree that has just committed</span></span></span></span><br><span class="line"><span class="params"><span class="function">  phase, <span class="comment">// either &quot;mount&quot; (if the tree just mounted) or &quot;update&quot; (if it re-rendered)</span></span></span></span><br><span class="line"><span class="params"><span class="function">  actualDuration, <span class="comment">// time spent rendering the committed update</span></span></span></span><br><span class="line"><span class="params"><span class="function">  baseDuration, <span class="comment">// estimated time to render the entire subtree without memoization</span></span></span></span><br><span class="line"><span class="params"><span class="function">  startTime, <span class="comment">// when React began rendering this update</span></span></span></span><br><span class="line"><span class="params"><span class="function">  commitTime, <span class="comment">// when React committed this update</span></span></span></span><br><span class="line"><span class="params"><span class="function">  interactions <span class="comment">// the Set of interactions belonging to this update</span></span></span></span><br><span class="line"><span class="params"><span class="function"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Aggregate or log render timings...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="React-Without-ES6"><a href="#React-Without-ES6" class="headerlink" title="React Without ES6"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/react-without-es6.html">React Without ES6</a></h1><blockquote>
+<p>略过。</p>
+</blockquote>
+<h1 id="React-Without-JSX"><a href="#React-Without-JSX" class="headerlink" title="React Without JSX"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/react-without-jsx.html">React Without JSX</a></h1><blockquote>
+<p>略过。</p>
+</blockquote>
+<h1 id="Reconciliation"><a href="#Reconciliation" class="headerlink" title="Reconciliation"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html">Reconciliation</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#motivation">Motivation</a></p>
+<p>React implements a heuristic O(n) algorithm based on two assumptions:</p>
+<ol>
+<li>Two elements of different types will produce different trees.</li>
+<li>The developer can hint at which child elements may be stable across different renders with a <code>key</code> prop.</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#elements-of-different-types">Elements Of Different Types</a></p>
+<p>Whenever the root elements have different types, React will tear down the old tree and build the new tree from scratch.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#dom-elements-of-the-same-type">DOM Elements Of The Same Type</a></p>
+<p>When comparing two React DOM elements of the same type, React looks at the attributes of both, keeps the same underlying DOM node, and only updates the changed attributes.</p>
+<p>When updating style, React also knows to update only the properties that changed.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#recursing-on-children">Recursing On Children</a></p>
+<p>By default, when recursing on the children of a DOM node, React just iterates over both lists of children at the same time and generates a mutation whenever there’s a difference.</p>
+<p>If you implement it naively, inserting an element at the beginning has worse performance.</p>
+<blockquote>
+<p>如果没有 <code>key</code>，React 就无脑地迭代比较每一子项——即用索引匹配比较项。所以如果在索引 0 处新插入了项，React 会认为自 0 开始的每一项都改变了，而不认为只是新加了一项。借此说明 <code>key</code> 的必要性。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#keys">Keys</a></p>
+<p>When children have keys, React uses the key to match children in the original tree with children in the subsequent tree.</p>
+<blockquote>
+<p><code>key</code> 只对 children 生效。</p>
+</blockquote>
+<p>Reorders can also cause issues with component state when indexes are used as keys.</p>
+<blockquote>
+<p>如果用索引做 key，重排序时比较项会错乱。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/reconciliation.html#tradeoffs">Tradeoffs</a></p>
+<blockquote>
+<p>呼应开头的两个假设。为了能获得最好的性能，尽量使用同一种组件/元素类型；尽量使用稳定、可预测、唯一的 key 值。</p>
+</blockquote>
+<h1 id="Refs-and-the-DOM"><a href="#Refs-and-the-DOM" class="headerlink" title="Refs and the DOM"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html">Refs and the DOM</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html#accessing-refs">Accessing Refs</a></p>
+<p>You may not use the <code>ref</code> attribute on function components because they don’t have instances.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html#adding-a-ref-to-a-dom-element">Adding a Ref to a DOM Element</a></p>
+<p><code>ref</code> updates happen before componentDidMount or componentDidUpdate lifecycle methods.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html#refs-and-function-components">Refs and Function Components</a></p>
+<p>If you want to allow people to take a <code>ref</code> to your function component, you can use <code>forwardRef</code>.</p>
+<blockquote>
+<p>承上文，<code>ref</code> 不能指向函数组件。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html#callback-refs">Callback Refs</a></p>
+<blockquote>
+<p><code>ref</code> 属性还支持接受一个函数作为参数值。函数接受一个指向当前组件/元素的参数。这时候就不需要 <code>createRef</code> 了，用普通的成员变量保存参数即可。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/refs-and-the-dom.html#caveats-with-callback-refs">Caveats with callback refs</a></p>
+<p>If the <code>ref</code> callback is defined as an inline function, it will get called twice during updates, first with <code>null</code> and then again with the DOM element. This is because a new instance of the function is created with each render, so React needs to clear the old ref and set up the new one.</p>
+<h1 id="Render-Props"><a href="#Render-Props" class="headerlink" title="Render Props"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/render-props.html">Render Props</a></h1><p>The term “render prop” refers to a technique for sharing code between React components using a prop whose value is a function.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/render-props.html#use-render-props-for-cross-cutting-concerns">Use Render Props for Cross-Cutting Concerns</a></p>
+<p>More concretely, a render prop is a function prop that a component uses to know what to render.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/render-props.html#using-props-other-than-render">Using Props Other Than render</a></p>
+<p>In fact, any prop that is a function that a component uses to know what to render is technically a “render prop”.</p>
+<blockquote>
+<p>children 也是。但是 children 还比较特殊，支持把函数定义放在组件内部。</p>
+</blockquote>
+<blockquote>
+<p>上边 3 句话逐渐接近 render prop 的本质。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/render-props.html#be-careful-when-using-render-props-with-reactpurecomponent">Be careful when using Render Props with React.PureComponent</a></p>
+<blockquote>
+<p>内联函数传递的通病——每次渲染都会认为是新创建的函数。解决方法也是一样，改为组件类的实例方法。</p>
+</blockquote>
+<h1 id="Static-Type-Checking"><a href="#Static-Type-Checking" class="headerlink" title="Static Type Checking"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/static-type-checking.html">Static Type Checking</a></h1><blockquote>
+<p>介绍了 Flow、TypeScript 等几种静态检查工具、语言。略。</p>
+</blockquote>
+<h1 id="Strict-Mode"><a href="#Strict-Mode" class="headerlink" title="Strict Mode"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html">Strict Mode</a></h1><p>Strict mode checks are run in development mode only; they do not impact the production build.</p>
+<p><code>StrictMode</code> currently helps with:</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#identifying-unsafe-lifecycles">Identifying unsafe lifecycles</a></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#warning-about-legacy-string-ref-api-usage">Warning about legacy string ref API usage</a></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#warning-about-deprecated-finddomnode-usage">Warning about deprecated findDOMNode usage</a></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects">Detecting unexpected side effects</a></p>
+<p>Conceptually, React does work in two phases:</p>
+<ul>
+<li>The <strong>render</strong> phase determines what changes need to be made to e.g. the DOM. During this phase, React calls <code>render</code> and then compares the result to the previous render.</li>
+<li>The <strong>commit</strong> phase is when React applies any changes. (In the case of React DOM, this is when React inserts, updates, and removes DOM nodes.) React also calls lifecycles like <code>componentDidMount</code> and <code>componentDidUpdate</code> during this phase.</li>
+</ul>
+<blockquote>
+<p>这章节信息量很大。列出了 <code>render</code> 阶段具体有哪些生命周期方法；v18 引入的并发模式有可能会导致多次调用 <code>render</code> 阶段的生命周期方法；严格模式会故意地两次调用这些生命周期方法以帮助识别非幂等代码导致的问题等。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#detecting-legacy-context-api">Detecting legacy context API</a></p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/strict-mode.html#ensuring-reusable-state">Ensuring reusable state</a></p>
+<p>In the future, we’d like to add a feature that allows React to add and remove sections of the UI while preserving state.</p>
+<blockquote>
+<p>为了支持这个 feature，React 要多次 mount、unmount 组件，<code>StrictMode</code> 会人为地 unmount 然后重新 mount 组件以测试组件，发现问题。</p>
+</blockquote>
+<h1 id="Typechecking-With-PropTypes"><a href="#Typechecking-With-PropTypes" class="headerlink" title="Typechecking With PropTypes"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/typechecking-with-proptypes.html">Typechecking With PropTypes</a></h1><p>To run typechecking on the props for a component, you can assign the special <code>propTypes</code> property.</p>
+<p><code>PropTypes</code> exports a range of validators that can be used to make sure the data you receive is valid.</p>
+<p>When an invalid value is provided for a prop, a warning will be shown in the JavaScript console. For performance reasons, <code>propTypes</code> is only checked in development mode.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/typechecking-with-proptypes.html#requiring-single-child">Requiring Single Child</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MyComponent.propTypes = &#123;</span><br><span class="line">  <span class="attr">children</span>: PropTypes.element.isRequired</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>MyComponent</code> 只能包含一个元素。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/typechecking-with-proptypes.html#default-prop-values">Default Prop Values</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Greeting.defaultProps = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Stranger&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>name prop 的默认值是 Stranger。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/typechecking-with-proptypes.html#function-components">Function Components</a></p>
+<blockquote>
+<p>必须在 <code>export</code> 之前定义 propTypes，所以要把 export default function 分开两句，中间定义 propTypes 属性。</p>
+</blockquote>
+<h1 id="Uncontrolled-Components"><a href="#Uncontrolled-Components" class="headerlink" title="Uncontrolled Components"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/uncontrolled-components.html">Uncontrolled Components</a></h1><p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/uncontrolled-components.html#default-values">Default Values</a></p>
+<p>Changing the value of <code>defaultValue</code> attribute after a component has mounted will not cause any update of the value in the DOM.</p>
+<p><a target="_blank" rel="noopener" href="https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag">The file input Tag</a></p>
+<p>In React, an <code>&lt;input type=&quot;file&quot; /&gt;</code> is always an uncontrolled component because its value can only be set by a user, and not programmatically.</p>
+<h1 id="Web-Components"><a href="#Web-Components" class="headerlink" title="Web Components"></a><a target="_blank" rel="noopener" href="https://reactjs.org/docs/web-components.html">Web Components</a></h1><p>React and Web Components are built to solve different problems. Web Components provide strong encapsulation for reusable components, while React provides a declarative library that keeps the DOM in sync with your data.</p>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/React/">React</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=61358e3ac93b3300122c7686&amp;product=sop" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/React%E7%AC%94%E8%AE%B0%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html"><span class="level-item">React 笔记—核心概念</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "I8KNPnIk0nHNlTkcrT4fGQue-gzGzoHsz",
+            appKey: "GWGNIR9mBnz5E0K3MWYzK34R",
+            
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/logo.png" alt="Liang Zuoting"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Liang Zuoting</p><p class="is-size-6 is-block">新生代农民工</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>广州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">78</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">27</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/liangzuoting" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">34</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/"><span class="level-start"><span class="level-item">C++17</span></span><span class="level-end"><span class="level-item tag">27</span></span></a><ul><li><a class="level is-mobile" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/"><span class="level-start"><span class="level-item">C++17详解</span></span><span class="level-end"><span class="level-item tag">25</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/C/HOPL4/"><span class="level-start"><span class="level-item">HOPL4</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/C/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/C/%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="level-start"><span class="level-item">并发计算</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/FFmpeg/"><span class="level-start"><span class="level-item">FFmpeg</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/FFmpeg-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><span class="level-start"><span class="level-item">FFmpeg 常用命令</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/MP4/"><span class="level-start"><span class="level-item">MP4</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/StreamingCore/"><span class="level-start"><span class="level-item">StreamingCore</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Unity/"><span class="level-start"><span class="level-item">Unity</span></span><span class="level-end"><span class="level-item tag">6</span></span></a><ul><li><a class="level is-mobile" href="/categories/Unity/%E4%BD%BF%E7%94%A8-Unity-%E5%BC%80%E5%8F%91-Android-VR-%E5%BA%94%E7%94%A8/"><span class="level-start"><span class="level-item">使用 Unity 开发 Android VR 应用</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/"><span class="level-start"><span class="level-item">Web</span></span><span class="level-end"><span class="level-item tag">9</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/Python/Sanic/"><span class="level-start"><span class="level-item">Sanic</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Web/React/"><span class="level-start"><span class="level-item">React</span></span><span class="level-end"><span class="level-item tag">4</span></span></a><ul><li><a class="level is-mobile" href="/categories/Web/React/Docs/"><span class="level-start"><span class="level-item">Docs</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"><span class="level-start"><span class="level-item">智能家居</span></span><span class="level-end"><span class="level-item tag">10</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/SmartHome/"><span class="level-start"><span class="level-item">SmartHome</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E6%9D%82%E8%AE%B0/"><span class="level-start"><span class="level-item">杂记</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-16T12:45:41.000Z">2022-05-16</time></p><p class="title"><a href="/React%E7%AC%94%E8%AE%B0%E2%80%94%E9%AB%98%E7%BA%A7%E6%8C%87%E5%BC%95.html">React 笔记—高级指引</a></p><p class="categories"><a href="/categories/Web/">Web</a> / <a href="/categories/Web/React/">React</a> / <a href="/categories/Web/React/Docs/">Docs</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-01T02:49:00.000Z">2022-05-01</time></p><p class="title"><a href="/React%E7%AC%94%E8%AE%B0%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html">React 笔记—核心概念</a></p><p class="categories"><a href="/categories/Web/">Web</a> / <a href="/categories/Web/React/">React</a> / <a href="/categories/Web/React/Docs/">Docs</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-28T04:25:15.000Z">2022-03-28</time></p><p class="title"><a href="/vultr-com%E9%BB%98%E8%AE%A4%E5%BC%80%E5%90%AF%E4%BA%86http%E9%98%B2%E7%81%AB%E5%A2%99.html">vultr.com 默认开启了 http 防火墙</a></p><p class="categories"><a href="/categories/Web/">Web</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-03-25T05:10:03.000Z">2022-03-25</time></p><p class="title"><a href="/%E5%9B%BD%E5%A4%96VPS%E9%BB%91%E7%99%BD%E5%90%8D%E5%8D%95.html">国外VPS黑白名单</a></p><p class="categories"><a href="/categories/Web/">Web</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-01-29T01:39:20.000Z">2022-01-29</time></p><p class="title"><a href="/HOPL4%E7%AC%94%E8%AE%B07-11.html">HOPL4 笔记 7—11</a></p><p class="categories"><a href="/categories/C/">C++</a> / <a href="/categories/C/HOPL4/">HOPL4</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">五月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">三月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/01/"><span class="level-start"><span class="level-item">一月 2022</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">十二月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">十一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/10/"><span class="level-start"><span class="level-item">十月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/09/"><span class="level-start"><span class="level-item">九月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/06/"><span class="level-start"><span class="level-item">六月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">五月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">四月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">三月 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/02/"><span class="level-start"><span class="level-item">二月 2021</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/01/"><span class="level-start"><span class="level-item">一月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">九月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">八月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/12/"><span class="level-start"><span class="level-item">十二月 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AVX2/"><span class="tag">AVX2</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Animator/"><span class="tag">Animator</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">29</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-17/"><span class="tag">C++17</span><span class="tag">27</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DeepSpeech/"><span class="tag">DeepSpeech</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FFmpeg/"><span class="tag">FFmpeg</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jellyfin/"><span class="tag">Jellyfin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MP4/"><span class="tag">MP4</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NAS/"><span class="tag">NAS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/NEON/"><span class="tag">NEON</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/React/"><span class="tag">React</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Sanic/"><span class="tag">Sanic</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Spectre/"><span class="tag">Spectre</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VPS/"><span class="tag">VPS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VR/"><span class="tag">VR</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Video-js/"><span class="tag">Video.js</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VideoPlayer/"><span class="tag">VideoPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Webpack/"><span class="tag">Webpack</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/XOPlayer/"><span class="tag">XOPlayer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mono/"><span class="tag">mono</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BD%E5%A4%96VPS/"><span class="tag">国外VPS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B9%B6%E8%A1%8C-%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/"><span class="tag">并行/并发计算</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%88%AC%E8%99%AB/"><span class="tag">爬虫</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%A5%BF%E5%AE%89/"><span class="tag">西安</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a><p class="is-size-7"><span>&copy; 2022 Liang Zuoting</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
