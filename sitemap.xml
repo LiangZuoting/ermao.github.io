@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://ermao.live/%E6%88%91%E8%BA%AB%E8%BE%B9%E7%9A%84%E8%BF%99%E4%BD%8D%E2%80%9C%E9%91%AB%E7%88%B7%E2%80%9D.html</loc>
+    
+    <lastmod>2023-08-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ermao.live/%E4%B8%80%E7%A7%8D%E4%BD%8E%E6%88%90%E6%9C%AC%E8%A7%86%E9%A2%91%E7%9B%B4%E6%92%AD%EF%BC%88%E8%BD%AE%E6%92%AD%EF%BC%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html</loc>
     
     <lastmod>2023-04-09</lastmod>
@@ -814,7 +823,7 @@
 
   <url>
     <loc>https://ermao.live/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -822,245 +831,245 @@
   
   <url>
     <loc>https://ermao.live/tags/C/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E5%B9%B6%E8%A1%8C-%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/AVX2/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/C-17/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/NEON/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Python/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E7%88%AC%E8%99%AB/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Unity/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/VR/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/mono/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Animator/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Qt/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/VideoPlayer/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/XOPlayer/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E8%A5%BF%E5%AE%89/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/DeepSpeech/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/React/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Spectre/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/FFmpeg/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/NAS/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Jellyfin/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Video-js/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Sanic/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/MP4/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Webpack/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/VPS/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E5%9B%BD%E5%A4%96VPS/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Cloudflare/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Web/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/TarsCPP/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Docker/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/Redis/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/tags/%E7%9B%B4%E6%92%AD/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1069,154 +1078,154 @@
   
   <url>
     <loc>https://ermao.live/categories/%E6%9D%82%E8%AE%B0/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/FFmpeg/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/StreamingCore/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Unity/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/%E5%B9%B6%E5%8F%91%E8%AE%A1%E7%AE%97/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/FFmpeg-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/C-17/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/MP4/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/SmartHome/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Web/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Web/React/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Web/Python/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Web/Python/Sanic/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/Qt/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Unity/%E4%BD%BF%E7%94%A8-Unity-%E5%BC%80%E5%8F%91-Android-VR-%E5%BA%94%E7%94%A8/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/HOPL4/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/Web/React/Docs/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/C/TarsCPP/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ermao.live/categories/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/</loc>
-    <lastmod>2023-04-09</lastmod>
+    <lastmod>2023-08-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
