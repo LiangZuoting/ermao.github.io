@@ -1,100 +1,53 @@
 <!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, C++17, C++17详解, C++17 in detail, 折叠表达式"><title>C++17 详解 12 - 学海扁舟</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="学海扁舟"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="学海扁舟"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"><meta property="og:type" content="blog"><meta property="og:title" content="C++17 详解 12"><meta property="og:url" content="https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2021-08-18T04:10:34.000Z"><meta property="article:modified_time" content="2021-08-18T05:48:17.663Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="C++, C++17, C++17详解, C++17 in detail, 折叠表达式"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"},"headline":"C++17 详解 12","image":["https://ermao.live/img/og_image.png"],"datePublished":"2021-08-18T04:10:34.000Z","dateModified":"2021-08-18T05:48:17.663Z","author":{"@type":"Person","name":"Liang Zuoting"},"publisher":{"@type":"Organization","name":"学海扁舟","logo":{"@type":"ImageObject","url":"https://ermao.live/img/logo.png"}},"description":"本文为 《C++17 in detail》 一书的中文渣中渣译文，不足之处还望指正。  4.2 折叠表达式C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。"}</script><link rel="canonical" href="https://ermao.live/C++17%E8%AF%A6%E8%A7%A312.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Welcome To My GitHub" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-08-18T04:10:34.000Z" title="2021/8/18 下午12:10:34">2021-08-18</time>发表</span><span class="level-item"><time dateTime="2021-08-18T05:48:17.663Z" title="2021/8/18 下午1:48:17">2021-08-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a><span> / </span><a class="link-muted" href="/categories/C/C-17/">C++17</a><span> / </span><a class="link-muted" href="/categories/C/C-17/C-17%E8%AF%A6%E8%A7%A3/">C++17详解</a></span><span class="level-item">5 分钟读完 (大约782个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">C++17 详解 12</h1><div class="content"><blockquote>
-<p>本文为 <a target="_blank" rel="noopener" href="https://www.cppindetail.com/">《C++17 in detail》</a> 一书的中文渣中渣译文，不足之处还望指正。</p>
-</blockquote>
-<h3 id="4-2-折叠表达式"><a href="#4-2-折叠表达式" class="headerlink" title="4.2 折叠表达式"></a>4.2 折叠表达式</h3><p>C++11 引入了可变参模版，这是一个非常强力的特性，特别是你想实现一个有可变数量的模版参数的函数时。比如，（C++11）之前你不得不实现多个不同版本的模版函数（一个带一个参数、另一个带两个参数、另一个带三个参数……）。</p>
-<a id="more"></a>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="C++, FFmpeg, 智能家居, Python, 全栈"><title>CSAPP 读书笔记-第六章存储器层次结构 - 学海扁舟</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="学海扁舟"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="学海扁舟"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="6.1 存储技术6.1.1 随机访问存储器 静态 RAM  用来做高速缓存存储器。 SRAM 将每个位存储在一个双稳态的存储器单元里。非常稳定，只有两个状态，正好表达二进制，但是造价高，功耗大。  动态 RAM  用来做内存。 DRAM 将每个位存储为对一个电容的充电。 DRAM 存储器单元对干扰非常敏感。暴露在光线下会导致电容电压改变。"><meta property="og:type" content="blog"><meta property="og:title" content="CSAPP 读书笔记-第六章存储器层次结构"><meta property="og:url" content="https://ermao.live/CSAPP%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.html"><meta property="og:site_name" content="学海扁舟"><meta property="og:description" content="6.1 存储技术6.1.1 随机访问存储器 静态 RAM  用来做高速缓存存储器。 SRAM 将每个位存储在一个双稳态的存储器单元里。非常稳定，只有两个状态，正好表达二进制，但是造价高，功耗大。  动态 RAM  用来做内存。 DRAM 将每个位存储为对一个电容的充电。 DRAM 存储器单元对干扰非常敏感。暴露在光线下会导致电容电压改变。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://ermao.live/img/og_image.png"><meta property="article:published_time" content="2023-09-20T05:54:22.000Z"><meta property="article:modified_time" content="2023-09-20T06:37:46.133Z"><meta property="article:author" content="Liang Zuoting"><meta property="article:tag" content="CSAPP"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://ermao.live/CSAPP%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.html"},"headline":"CSAPP 读书笔记-第六章存储器层次结构","image":["https://ermao.live/img/og_image.png"],"datePublished":"2023-09-20T05:54:22.000Z","dateModified":"2023-09-20T06:37:46.133Z","author":{"@type":"Person","name":"Liang Zuoting"},"publisher":{"@type":"Organization","name":"学海扁舟","logo":{"@type":"ImageObject","url":"https://ermao.live/img/logo.png"}},"description":"6.1 存储技术6.1.1 随机访问存储器 静态 RAM  用来做高速缓存存储器。 SRAM 将每个位存储在一个双稳态的存储器单元里。非常稳定，只有两个状态，正好表达二进制，但是造价高，功耗大。  动态 RAM  用来做内存。 DRAM 将每个位存储为对一个电容的充电。 DRAM 存储器单元对干扰非常敏感。暴露在光线下会导致电容电压改变。"}</script><link rel="canonical" href="https://ermao.live/CSAPP%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.html"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><script data-ad-client="ca-pub-1192763073074487" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="学海扁舟" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Welcome To My GitHub" href="https://github.com/liangzuoting"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-09-20T05:54:22.000Z" title="2023/9/20 下午1:54:22">2023-09-20</time>发表</span><span class="level-item"><time dateTime="2023-09-20T06:37:46.133Z" title="2023/9/20 下午2:37:46">2023-09-20</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/CSAPP/">CSAPP</a></span><span class="level-item">6 分钟读完 (大约965个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">CSAPP 读书笔记-第六章存储器层次结构</h1><div class="content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="6-1-存储技术"><a href="#6-1-存储技术" class="headerlink" title="6.1 存储技术"></a>6.1 存储技术</h2><h3 id="6-1-1-随机访问存储器"><a href="#6-1-1-随机访问存储器" class="headerlink" title="6.1.1 随机访问存储器"></a>6.1.1 随机访问存储器</h3><ol>
+<li>静态 RAM</li>
+</ol>
+<p>用来做高速缓存存储器。</p>
+<p>SRAM 将每个位存储在一个双稳态的存储器单元里。非常稳定，只有两个状态，正好表达二进制，但是造价高，功耗大。</p>
+<ol start="2">
+<li>动态 RAM</li>
+</ol>
+<p>用来做内存。</p>
+<p>DRAM 将每个位存储为对一个电容的充电。</p>
+<p>DRAM 存储器单元对干扰非常敏感。暴露在光线下会导致电容电压改变。</p>
+<span id="more"></span>
 
-<p>当你想实现类似 sum 这样的递归函数时，可变参模版仍然需要一些额外的代码。你必须指明递归规则。</p>
-<p>比如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">SumCpp11</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span>... T&gt;</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">SumCpp11</span><span class="params">(T1 s, T... ts)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s + SumCpp11(ts...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过 C++17 我们可以把代码写得更简单:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ... + <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者甚至:</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum2</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有如下几种使用二元操作符的折叠表达式的变种：</p>
-<table>
-<thead>
-<tr>
-<th align="left">表达式</th>
-<th align="left">名称</th>
-<th align="left">解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>(... op e)</code></td>
-<td align="left">一元左折叠</td>
-<td align="left"><code>((e1 op e2) op ...) op eN</code></td>
-</tr>
-<tr>
-<td align="left"><code>(init op ... op e)</code></td>
-<td align="left">二元左折叠</td>
-<td align="left"><code>(((init op e1) op e2) op ...) op eN</code></td>
-</tr>
-<tr>
-<td align="left"><code>(e op ...)</code></td>
-<td align="left">一元右折叠</td>
-<td align="left"><code>e1 op (... op (eN-1 op eN))</code></td>
-</tr>
-<tr>
-<td align="left"><code>(e op ... op init)</code></td>
-<td align="left">二元右折叠</td>
-<td align="left"><code>e1 op (... op (eN-1 op (eN op init)))</code></td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>译注：注意，<strong>折叠表达式外层必须有一个括号</strong>。</p>
-</blockquote>
-<p><code>op</code> 可以是下边 32 种二元操作符中的任意一个：<code>+ - * / % ^ &amp; | = &lt; &gt; &lt;&lt; &gt;&gt; += -= *= /= %=
-^= &amp;= |= &lt;&lt;= &gt;&gt;= == != &lt;= &gt;= &amp;&amp; || , .* -&gt;*</code> 。在一个二元折叠里，两个 <code>op</code> 必须一样。</p>
-<p>比如，当你写下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt; <span class="function"><span class="keyword">auto</span> <span class="title">sum2</span><span class="params">(Args ...args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (args + ...); <span class="comment">// unary right fold over '+'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> value = sum2(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
-
-<p>模版函数被展开为：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> value = <span class="number">1</span> + (<span class="number">2</span> + (<span class="number">3</span> + <span class="number">4</span>));</span><br></pre></td></tr></table></figure>
-
-<p>对空参数包，默认得到下列值：</p>
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&amp;&amp;</td>
-<td align="left"><code>true</code></td>
-</tr>
-<tr>
-<td align="left">&#124;&#124;</td>
-<td align="left"><code>false</code></td>
-</tr>
-<tr>
-<td align="left">,</td>
-<td align="left"><code>void()</code></td>
-</tr>
-<tr>
-<td align="left">其它</td>
-<td align="left">错误</td>
-</tr>
-</tbody></table>
-<p>这也是为什么你不能不带任何参数调用 <code>sum2</code>，因为 <code>+</code> 操作符上的一元折叠对空参数列表没有任何默认值。</p>
-<p><strong>更多示例</strong></p>
-<p>这里有一个使用折叠的非常好的 <code>printf</code> 实现 <a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0036r0.pdf">P0036R0</a>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FoldPrint</span><span class="params">(Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    (<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; ... &lt;&lt; <span class="built_in">std</span>::forward&lt;Args&gt;(args)) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">FoldPrint(<span class="string">"hello"</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
-
-<p>但是上边的 <code>FoldPrint</code> 一个接一个地打印参数，没有任何分隔符。所以你会看到 “hello102030” 这样的输出。</p>
-<p>如果想要分隔符和其它更多格式化选项，你必须调整打印技巧，在逗号操作符上使用折叠：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ...Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">FoldSeparateLine</span><span class="params">(Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> separateLine = [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; v &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    (... , separateLine (<span class="built_in">std</span>::forward&lt;Args&gt;(args))); <span class="comment">// over comma operator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这种通过逗号操作符使用折叠的技巧很方便。另一个例子是一个 <code>push_back</code> 的特殊版本：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back_vec</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt;&amp; v, Args&amp;&amp;... args)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    (v.push_back(<span class="built_in">std</span>::forward&lt;Args&gt;(args)), ...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">float</span>&gt; vf;</span><br><span class="line">push_back_vec(vf, <span class="number">10.5f</span>, <span class="number">0.7f</span>, <span class="number">1.1f</span>, <span class="number">0.89f</span>);</span><br></pre></td></tr></table></figure>
-
-<p>一般来讲，折叠表达式能让你写出更清晰、更短小、也可能读起来更令人愉悦的代码。</p>
-<blockquote>
-<p>扩展：本修改提案：<a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4295.html">N4295</a> 和 <a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0036r0.pdf">P0036R0</a>。</p>
-</blockquote>
-</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a><a class="link-muted mr-2" rel="tag" href="/tags/C-17/">C++17</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=61358e3ac93b3300122c7686&amp;product=sop" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/C++17%E8%AF%A6%E8%A7%A313.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">C++17 详解 13</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Windows-%E4%B8%8B-Qt-Installer-Framework-%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91.html"><span class="level-item">Windows 下 Qt Installer Framework 源码编译</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
+<ol start="5">
+<li>增强的 DRAM</li>
+</ol>
+<p>DDR SDRAM，Double Data-Rate Synchronous DRAM，双倍数据速率同步 DRAM。就是我们现在用的 DDR 内存条。</p>
+<p>不同类型的 DDR SDRAM 是用提高有效带宽的很小的预取缓冲区的大小来划分的：DDR（2位）、DDR2（4位）、DDR3（8位）。</p>
+<ol start="6">
+<li>非易失性存储器</li>
+</ol>
+<p>断电后仍然保存信息。</p>
+<p>由于历史原因，虽然 ROM 中有的类型既可以读也可以写，但是它们整体上都被称为<em>只读存储器</em>（Read-Only Memory，ROM）。</p>
+<p>闪存（flash memory）基于 EEPROM（电子可擦除可编程 ROM），固态硬盘基于闪存。</p>
+<p>存储在 ROM 设备中的程序通常被称为固件（firmware）。当一个计算机系统通电以后，它会运行存储在 ROM 中的固件。一些系统在固件中提供了少量基本的输入和输出函数——例如 PC 的 BIOS（基本输入/输出系统）例程。复杂的设备，像图形卡和磁盘驱动控制器，也依赖固件翻译来自 CPU 的 I/O 请求。</p>
+<ol start="7">
+<li>访问主存</li>
+</ol>
+<p>数据流通过称为总线（bus）的共享电子电路在处理器和 DRAM 主存之间来来回回。每次 CPU 和主存之间的数据传送都是通过一系列步骤来完成的，这些步骤称为总线事务。读事务从主存传送数据到 CPU，写事务从 CPU 传送数据到主存。</p>
+<h3 id="6-1-2-磁盘存储"><a href="#6-1-2-磁盘存储" class="headerlink" title="6.1.2 磁盘存储"></a>6.1.2 磁盘存储</h3><p>从磁盘读信息的时间为毫秒级，比从 DRAM 读慢了 10 万倍，比从 SRAM 读慢了 100 万倍。</p>
+<ol>
+<li>磁盘构造</li>
+</ol>
+<p>磁盘 = N x 盘片 = N x 2 x 表面 = N x 2 x M x 磁道 = N x 2 x M x L x 扇区。</p>
+<p>每个磁盘有两个表面，每个表面由一组称为磁道（track）的同心圆组成，每个磁道被划分为一组扇区，每个扇区包含相等数量的数据位。</p>
+<p>多个盘片叠放在一起组成磁盘。</p>
+<ol start="3">
+<li>磁盘操作</li>
+</ol>
+<p>磁盘以扇区大小的块来读写数据。对扇区的访问时间有三个主要的部分：</p>
+<ul>
+<li>寻道时间：移动传动臂到包含目标扇区的磁道上</li>
+<li>旋转时间：目标扇区的第一个位旋转到读/写头下</li>
+<li>传送时间：从目标扇区第一个位旋转到最后一个位</li>
+</ul>
+<h2 id="6-2-局部性"><a href="#6-2-局部性" class="headerlink" title="6.2 局部性"></a>6.2 局部性</h2><p>局部性通常有两种不同的形式：时间局部性和空间局部性。在一个具有良好时间局部性的程序中，被引用过一次的内存位置很可能在不远的将来再被多次引用。在一个具有良好空间局部性的程序中，如果一个内存位置被引用了一次，那么程序很可能在不远的将来引用附近的一个内存位置。</p>
+<h2 id="6-4-高速缓存存储器"><a href="#6-4-高速缓存存储器" class="headerlink" title="6.4 高速缓存存储器"></a>6.4 高速缓存存储器</h2><h3 id="6-4-1-通用的高速缓存存储器组织结构"><a href="#6-4-1-通用的高速缓存存储器组织结构" class="headerlink" title="6.4.1 通用的高速缓存存储器组织结构"></a>6.4.1 通用的高速缓存存储器组织结构</h3><p>cache = M x 缓存组（cache set）= M x N x 缓存行（cache line）。</p>
+<p>缓存行最典型的大小是 64 字节。</p>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/CSAPP/">CSAPP</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=61358e3ac93b3300122c7686&amp;product=sop" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechat.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CSAPP%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%94%E7%AB%A0%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD.html"><span class="level-item">CSAPP 读书笔记-第五章优化程序性能</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread',
             appId: "I8KNPnIk0nHNlTkcrT4fGQue-gzGzoHsz",
             appKey: "GWGNIR9mBnz5E0K3MWYzK34R",
